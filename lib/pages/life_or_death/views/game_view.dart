@@ -30,6 +30,7 @@ class _GameViewState extends State<GameView> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          _buildScore(gameBloc),
           _buildInstructionText(isCorrect),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,6 +87,19 @@ class _GameViewState extends State<GameView> {
         setState(() {});
       },
       child: const Text('Restart'),
+    );
+  }
+
+  Widget _buildScore(GameBloc gameBloc) {
+    final lifeCount = gameBloc.state.lifeCount;
+    final dieCount = gameBloc.state.dieCount;
+    return Column(
+      children: [
+        Text('Life: $lifeCount'),
+        Text('Die: $dieCount'),
+        Text(
+            'SurvivalRate: ${dieCount + lifeCount > 0 ? '${(lifeCount / (dieCount + lifeCount) * 100).toStringAsFixed(1)}%' : 'NoRecord'}'),
+      ],
     );
   }
 }
