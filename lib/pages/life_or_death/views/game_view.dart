@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/game_bloc.dart';
+import '../bloc/game_event.dart';
 
 class GameView extends StatefulWidget {
   const GameView({super.key});
@@ -20,33 +24,68 @@ class _GameViewState extends State<GameView> {
   }
 
   Widget _buildBody() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildInstructionText(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildButton(),
-            _buildButton(),
-          ],
-        ),
-      ],
-    );
+    return Builder(builder: (context) {
+      final gameBloc = BlocProvider.of<GameBloc>(context);
+      final isCorrect = gameBloc.state.isCorrect;
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildInstructionText(isCorrect),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              if (isCorrect == null) ...[
+                Expanded(child: _buildButton(0, gameBloc)),
+                Expanded(child: _buildButton(1, gameBloc))
+              ] else
+                _buildRestartButton(gameBloc),
+            ],
+          ),
+        ],
+      );
+    });
   }
 
-  Widget _buildInstructionText() {
-    return const Text(
-      'Choose One',
-      style: TextStyle(fontSize: 60),
+  Widget _buildInstructionText(bool? isCorrect) {
+    String title;
+    if (isCorrect == null) {
+      title = 'Choose One';
+    } else if (isCorrect) {
+      title = 'You Live';
+    } else {
+      title = 'You Die';
+    }
+    return Text(
+      title,
+      style: const TextStyle(fontSize: 60),
       textAlign: TextAlign.center,
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(int index, GameBloc gameBloc) {
+    final title = index == 0 ? 'left' : 'right';
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ElevatedButton(
+          onPressed: () {
+            gameBloc.add(GameAnswerEvent(index));
+            setState(() {});
+          },
+          child: Text(title, style: const TextStyle(fontSize: 40)),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRestartButton(GameBloc gameBloc) {
     return ElevatedButton(
-      onPressed: () {},
-      child: const Text('Life'),
+      onPressed: () {
+        gameBloc.add(GameStartEvent());
+        setState(() {});
+      },
+      child: const Text('Restart'),
     );
   }
 }
