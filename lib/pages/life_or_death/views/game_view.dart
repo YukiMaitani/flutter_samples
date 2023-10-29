@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_samples/pages/life_or_death/bloc/game_state.dart';
 
 import '../bloc/game_bloc.dart';
 import '../bloc/game_event.dart';
@@ -12,16 +16,22 @@ class GameView extends StatefulWidget {
 }
 
 class _GameViewState extends State<GameView> {
+  Offset _offset = Offset.zero;
+  bool _isAnimating = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Life or Death'),
-        shadowColor: Colors.transparent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: _buildBody(),
+    return Transform.translate(
+      offset: _offset,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Life or Death'),
+          shadowColor: Colors.transparent,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildBody(),
+        ),
       ),
     );
   }
@@ -29,26 +39,33 @@ class _GameViewState extends State<GameView> {
   Widget _buildBody() {
     final gameBloc = BlocProvider.of<GameBloc>(context);
     final isCorrect = gameBloc.state.isCorrect;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(height: 20),
-        Align(alignment: Alignment.topRight, child: _buildScore(gameBloc)),
-        const SizedBox(height: 100),
-        _buildInstructionText(isCorrect),
-        const Spacer(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            if (isCorrect == null) ...[
-              Expanded(child: _buildButton(0, gameBloc)),
-              Expanded(child: _buildButton(1, gameBloc))
-            ] else
-              _buildRestartButton(gameBloc),
-          ],
-        ),
-        const Spacer(),
-      ],
+    return BlocListener<GameBloc, GameState>(
+      listener: (BuildContext context, state) {
+        if (state.isCorrect != null && !state.isCorrect!) {
+          _bounceAnimation();
+        }
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20),
+          Align(alignment: Alignment.topRight, child: _buildScore(gameBloc)),
+          const SizedBox(height: 100),
+          _buildInstructionText(isCorrect),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              if (isCorrect == null) ...[
+                Expanded(child: _buildButton(0, gameBloc)),
+                Expanded(child: _buildButton(1, gameBloc))
+              ] else
+                _buildRestartButton(gameBloc),
+            ],
+          ),
+          const Spacer(),
+        ],
+      ),
     );
   }
 
@@ -87,10 +104,12 @@ class _GameViewState extends State<GameView> {
 
   Widget _buildRestartButton(GameBloc gameBloc) {
     return ElevatedButton(
-      onPressed: () {
-        gameBloc.add(GameStartEvent());
-        setState(() {});
-      },
+      onPressed: _isAnimating
+          ? null
+          : () {
+              gameBloc.add(GameStartEvent());
+              setState(() {});
+            },
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       ),
@@ -111,5 +130,23 @@ class _GameViewState extends State<GameView> {
             style: textStyle),
       ],
     );
+  }
+
+  void _bounceAnimation() {
+    const seconds = 3;
+    const countInMilliseconds = 8;
+    const milliseconds = 1000 / countInMilliseconds;
+    var counter = seconds * countInMilliseconds;
+    _isAnimating = true;
+    Timer.periodic(Duration(milliseconds: milliseconds.toInt()), (timer) {
+      counter--;
+      _offset = Offset(0, sin(counter) * counter * counter / 2);
+      if (counter == 0) {
+        _offset = Offset.zero;
+        _isAnimating = false;
+        timer.cancel();
+      }
+      setState(() {});
+    });
   }
 }
