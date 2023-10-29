@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_samples/pages/life_or_death/bloc/game_state.dart';
@@ -18,6 +19,12 @@ class GameView extends StatefulWidget {
 class _GameViewState extends State<GameView> {
   Offset _offset = Offset.zero;
   bool _isAnimating = false;
+  final _audioPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +144,7 @@ class _GameViewState extends State<GameView> {
     const countInMilliseconds = 8;
     const milliseconds = 1000 / countInMilliseconds;
     var counter = seconds * countInMilliseconds;
+    _playSound();
     _isAnimating = true;
     Timer.periodic(Duration(milliseconds: milliseconds.toInt()), (timer) {
       counter--;
@@ -148,5 +156,9 @@ class _GameViewState extends State<GameView> {
       }
       setState(() {});
     });
+  }
+
+  Future<void> _playSound() async {
+    await _audioPlayer.play(AssetSource('sounds/explosion.mp3'));
   }
 }
