@@ -16,6 +16,16 @@ class $AssetsImagesGen {
       const $AssetsImagesLifeOrDeathGen();
 }
 
+class $AssetsSoundsGen {
+  const $AssetsSoundsGen();
+
+  /// File path: assets/sounds/explosion.mp3
+  String get explosion => 'assets/sounds/explosion.mp3';
+
+  /// List of all assets
+  List<String> get values => [explosion];
+}
+
 class $AssetsImagesLifeOrDeathGen {
   const $AssetsImagesLifeOrDeathGen();
 
@@ -31,6 +41,7 @@ class Assets {
   Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsSoundsGen sounds = $AssetsSoundsGen();
 }
 
 class AssetGenImage {

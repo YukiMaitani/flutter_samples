@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_samples/pages/collision_detection/bloc/collision_bloc.dart';
+import 'package:flutter_samples/pages/collision_detection/bloc/collision_state.dart';
+
+import 'boxes_painter.dart';
 
 class CollisionDetectionPage extends StatefulWidget {
   const CollisionDetectionPage({super.key});
@@ -27,8 +30,25 @@ class _CollisionDetectionPageState extends State<CollisionDetectionPage> {
   }
 
   Widget _buildBody() {
-    return const Column(
-      children: [],
+    return Builder(builder: (context) {
+      final bloc = BlocProvider.of<CollisionBloc>(context);
+      return BlocListener<CollisionBloc, CollisionState>(
+        listener: (context, state) {},
+        child: Column(
+          children: [
+            _buildBoxesPainter(bloc),
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget _buildBoxesPainter(CollisionBloc bloc) {
+    return GestureDetector(
+      child: CustomPaint(
+        painter: BoxesPainter(bloc.state),
+        child: Container(),
+      ),
     );
   }
 }
