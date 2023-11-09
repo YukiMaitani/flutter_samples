@@ -20,6 +20,8 @@ class HomePage extends StatelessWidget {
     return ListView(
       children: [
         _buildListTile(title: 'Life or Death', path: lifeOrDeathPath),
+        _buildListTile(
+            title: 'Collision Detection', path: collisionDetectionPath),
         _buildListTile(title: 'Earth', path: earthPath),
       ],
     );
