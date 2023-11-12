@@ -46,6 +46,10 @@ class _CollisionDetectionPageState extends State<CollisionDetectionPage> {
 
   Widget _buildBoxesPainter(CollisionBloc bloc) {
     return GestureDetector(
+      onPanStart: (details) {
+        bloc.add(SetIndexEvent(details.localPosition));
+        setState(() {});
+      },
       onPanUpdate: (details) {
         bloc.add(UpdatePointEvent(details.localPosition));
         setState(() {});

@@ -14,3 +14,10 @@ class UpdatePointEvent extends CollisionEvent {
   @override
   List<Object> get props => [touchPoint];
 }
+
+class SetIndexEvent extends CollisionEvent {
+  final Offset touchPoint;
+  const SetIndexEvent(this.touchPoint);
+  @override
+  List<Object> get props => [touchPoint];
+}

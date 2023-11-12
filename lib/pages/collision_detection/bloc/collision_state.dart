@@ -15,15 +15,18 @@ class CollisionState extends Equatable {
         center: Offset(200, 300),
         type: BoxType.polygon,
         color: Color(0xFF000000)),
+    this.selectedId = 0,
   });
   final Box point;
   final Box polygon;
+  final int selectedId;
   List<Offset> get polygonPoints => [
         Offset(polygon.center.dx - 50, polygon.center.dy - 50),
         Offset(polygon.center.dx - 50, polygon.center.dy + 50),
         Offset(polygon.center.dx + 50, polygon.center.dy + 50),
         Offset(polygon.center.dx + 50, polygon.center.dy - 50),
       ];
+  bool get isTargetPolygon => selectedId == 1;
   @override
-  List<Object?> get props => [point, polygon];
+  List<Object?> get props => [point, polygon, selectedId];
 }

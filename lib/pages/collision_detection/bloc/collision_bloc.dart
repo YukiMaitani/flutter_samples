@@ -9,19 +9,51 @@ import 'collision_state.dart';
 class CollisionBloc extends Bloc<CollisionEvent, CollisionState> {
   CollisionBloc() : super(const CollisionState()) {
     on<UpdatePointEvent>((event, emit) {
-      emit(CollisionState(
+      final isTargetPolygon = state.isTargetPolygon;
+      final polygonColor =
+          _existInPolygon() ? const Color(0xFFFF0000) : const Color(0xFF000000);
+      if (isTargetPolygon) {
+        emit(CollisionState(
+          polygon: state.polygon.copyWith(
+            center: event.touchPoint,
+            color: polygonColor,
+          ),
+          point: state.point,
+          selectedId: 1,
+        ));
+      } else {
+        emit(CollisionState(
           point: state.point.copyWith(
             center: event.touchPoint,
           ),
-          polygon: state.polygon.copyWith(
-            color: _existInPolygon()
-                ? const Color(0xFFFF0000)
-                : const Color(0xFF000000),
-          )));
+          polygon: state.polygon.copyWith(color: polygonColor),
+          selectedId: 0,
+        ));
+      }
+    });
+    on<SetIndexEvent>((event, emit) {
+      final isTouchPolygon = _isTouchPolygon(event.touchPoint);
+      emit(CollisionState(
+          selectedId: isTouchPolygon ? 1 : 0,
+          point: state.point,
+          polygon: state.polygon));
     });
   }
 
   Vector2 _vec2FromOffset(Offset offset) => Vector2(offset.dx, offset.dy);
+
+  bool _isTouchPolygon(Offset tapPoint) {
+    final tappedArea = Path()
+      ..addRect(Rect.fromCenter(center: tapPoint, width: 100, height: 100));
+    final points = state.polygonPoints;
+    for (int i = 0; i < points.length; i++) {
+      final offset = points[i];
+      if (tappedArea.contains(offset)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   bool _isPolygonCW() {
     final polygonPoints = state.polygonPoints;
