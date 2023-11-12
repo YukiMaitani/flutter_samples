@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_samples/pages/collision_detection/bloc/collision_bloc.dart';
 import 'package:flutter_samples/pages/collision_detection/bloc/collision_state.dart';
 
+import '../bloc/collision_event.dart';
 import 'boxes_painter.dart';
 
 class CollisionDetectionPage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _CollisionDetectionPageState extends State<CollisionDetectionPage> {
         listener: (context, state) {},
         child: Column(
           children: [
-            _buildBoxesPainter(bloc),
+            Expanded(child: _buildBoxesPainter(bloc)),
           ],
         ),
       );
@@ -45,6 +46,10 @@ class _CollisionDetectionPageState extends State<CollisionDetectionPage> {
 
   Widget _buildBoxesPainter(CollisionBloc bloc) {
     return GestureDetector(
+      onPanUpdate: (details) {
+        bloc.add(UpdatePointEvent(details.localPosition));
+        setState(() {});
+      },
       child: CustomPaint(
         painter: BoxesPainter(bloc.state),
         child: Container(),
