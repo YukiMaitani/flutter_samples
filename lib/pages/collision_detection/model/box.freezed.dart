@@ -19,6 +19,7 @@ mixin _$Box {
   int get id => throw _privateConstructorUsedError;
   Offset get center => throw _privateConstructorUsedError;
   BoxType get type => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BoxCopyWith<Box> get copyWith => throw _privateConstructorUsedError;
@@ -29,7 +30,7 @@ abstract class $BoxCopyWith<$Res> {
   factory $BoxCopyWith(Box value, $Res Function(Box) then) =
       _$BoxCopyWithImpl<$Res, Box>;
   @useResult
-  $Res call({int id, Offset center, BoxType type});
+  $Res call({int id, Offset center, BoxType type, Color color});
 }
 
 /// @nodoc
@@ -47,6 +48,7 @@ class _$BoxCopyWithImpl<$Res, $Val extends Box> implements $BoxCopyWith<$Res> {
     Object? id = null,
     Object? center = null,
     Object? type = null,
+    Object? color = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -61,6 +63,10 @@ class _$BoxCopyWithImpl<$Res, $Val extends Box> implements $BoxCopyWith<$Res> {
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as BoxType,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
     ) as $Val);
   }
 }
@@ -71,7 +77,7 @@ abstract class _$$BoxImplCopyWith<$Res> implements $BoxCopyWith<$Res> {
       __$$BoxImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, Offset center, BoxType type});
+  $Res call({int id, Offset center, BoxType type, Color color});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$BoxImplCopyWithImpl<$Res> extends _$BoxCopyWithImpl<$Res, _$BoxImpl>
     Object? id = null,
     Object? center = null,
     Object? type = null,
+    Object? color = null,
   }) {
     return _then(_$BoxImpl(
       id: null == id
@@ -100,6 +107,10 @@ class __$$BoxImplCopyWithImpl<$Res> extends _$BoxCopyWithImpl<$Res, _$BoxImpl>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as BoxType,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
     ));
   }
 }
@@ -107,7 +118,11 @@ class __$$BoxImplCopyWithImpl<$Res> extends _$BoxCopyWithImpl<$Res, _$BoxImpl>
 /// @nodoc
 
 class _$BoxImpl implements _Box {
-  const _$BoxImpl({required this.id, required this.center, required this.type});
+  const _$BoxImpl(
+      {required this.id,
+      required this.center,
+      required this.type,
+      required this.color});
 
   @override
   final int id;
@@ -115,10 +130,12 @@ class _$BoxImpl implements _Box {
   final Offset center;
   @override
   final BoxType type;
+  @override
+  final Color color;
 
   @override
   String toString() {
-    return 'Box(id: $id, center: $center, type: $type)';
+    return 'Box(id: $id, center: $center, type: $type, color: $color)';
   }
 
   @override
@@ -128,11 +145,12 @@ class _$BoxImpl implements _Box {
             other is _$BoxImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.center, center) || other.center == center) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.color, color) || other.color == color));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, center, type);
+  int get hashCode => Object.hash(runtimeType, id, center, type, color);
 
   @JsonKey(ignore: true)
   @override
@@ -145,7 +163,8 @@ abstract class _Box implements Box {
   const factory _Box(
       {required final int id,
       required final Offset center,
-      required final BoxType type}) = _$BoxImpl;
+      required final BoxType type,
+      required final Color color}) = _$BoxImpl;
 
   @override
   int get id;
@@ -153,6 +172,8 @@ abstract class _Box implements Box {
   Offset get center;
   @override
   BoxType get type;
+  @override
+  Color get color;
   @override
   @JsonKey(ignore: true)
   _$$BoxImplCopyWith<_$BoxImpl> get copyWith =>

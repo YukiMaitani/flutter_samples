@@ -13,14 +13,14 @@ class BoxesPainter extends CustomPainter {
     final paint = Paint()
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
-    canvas.drawCircle(point.center, 5, paint..color = Colors.lightGreenAccent);
+    canvas.drawCircle(point.center, 5, paint..color = point.color);
     canvas.drawRect(
       Rect.fromCenter(
         center: polygon.center,
         width: 100,
         height: 100,
       ),
-      paint..color = Colors.black,
+      paint..color = polygon.color,
     );
   }
 

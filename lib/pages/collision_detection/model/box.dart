@@ -15,5 +15,6 @@ class Box with _$Box {
     required int id,
     required Offset center,
     required BoxType type,
+    required Color color,
   }) = _Box;
 }
