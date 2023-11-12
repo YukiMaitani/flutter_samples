@@ -68,26 +68,24 @@ class CollisionBloc extends Bloc<CollisionEvent, CollisionState> {
 
   bool _existInPolygon() {
     final polygonPoints = state.polygonPoints;
-    final a = _vec2FromOffset(polygonPoints[0]);
-    final b = _vec2FromOffset(polygonPoints[1]);
-    final c = _vec2FromOffset(polygonPoints[2]);
-    final d = _vec2FromOffset(polygonPoints[3]);
-    final ap = _vec2FromOffset(state.point.center) - a;
-    final bp = _vec2FromOffset(state.point.center) - b;
-    final cp = _vec2FromOffset(state.point.center) - c;
-    final dp = _vec2FromOffset(state.point.center) - d;
-    final ab = b - a;
-    final bc = c - b;
-    final cd = d - c;
-    final da = a - d;
-    final crossABP = ab.cross(ap);
-    final crossBCP = bc.cross(bp);
-    final crossCDP = cd.cross(cp);
-    final crossDAP = da.cross(dp);
-    if (_isPolygonCW()) {
-      return crossABP > 0 && crossBCP > 0 && crossCDP > 0 && crossDAP > 0;
-    } else {
-      return crossABP < 0 && crossBCP < 0 && crossCDP < 0 && crossDAP < 0;
+    final pVec = _vec2FromOffset(state.point.center);
+    final vNum = polygonPoints.length;
+    for (int i = 0; i < vNum; i++) {
+      final cVec = _vec2FromOffset(polygonPoints[i]);
+      final nVec = _vec2FromOffset(polygonPoints[(i + 1) % vNum]);
+      final cnVec = nVec - cVec;
+      final cpVec = pVec - cVec;
+      final cross = cnVec.cross(cpVec);
+      if (_isPolygonCW()) {
+        if (cross < 0) {
+          return false;
+        }
+      } else {
+        if (cross > 0) {
+          return false;
+        }
+      }
     }
+    return true;
   }
 }
