@@ -8,37 +8,42 @@ import 'collision_state.dart';
 
 class CollisionBloc extends Bloc<CollisionEvent, CollisionState> {
   CollisionBloc() : super(const CollisionState()) {
-    on<UpdatePointEvent>((event, emit) {
-      final isTargetPolygon = state.isTargetPolygon;
-      final polygonColor = _existInPolygonWithCrossingNumber()
-          ? const Color(0xFFFF0000)
-          : const Color(0xFF000000);
-      if (isTargetPolygon) {
-        emit(CollisionState(
-          polygon: state.polygon.copyWith(
-            center: event.touchPoint,
-            color: polygonColor,
-          ),
-          point: state.point,
-          selectedId: 1,
-        ));
-      } else {
-        emit(CollisionState(
-          point: state.point.copyWith(
-            center: event.touchPoint,
-          ),
-          polygon: state.polygon.copyWith(color: polygonColor),
-          selectedId: 0,
-        ));
-      }
-    });
-    on<SetIndexEvent>((event, emit) {
-      final isTouchPolygon = _isTouchPolygon(event.touchPoint);
+    on<UpdatePointEvent>(_onUpdatePointEvent);
+    on<SetIndexEvent>(_onSetIndexEvent);
+  }
+
+  void _onUpdatePointEvent(
+      UpdatePointEvent event, Emitter<CollisionState> emit) {
+    final isTargetPolygon = state.isTargetPolygon;
+    final polygonColor = _existInPolygonWithCrossingNumber()
+        ? const Color(0xFFFF0000)
+        : const Color(0xFF000000);
+    if (isTargetPolygon) {
       emit(CollisionState(
-          selectedId: isTouchPolygon ? 1 : 0,
-          point: state.point,
-          polygon: state.polygon));
-    });
+        polygon: state.polygon.copyWith(
+          center: event.touchPoint,
+          color: polygonColor,
+        ),
+        point: state.point,
+        selectedId: 1,
+      ));
+    } else {
+      emit(CollisionState(
+        point: state.point.copyWith(
+          center: event.touchPoint,
+        ),
+        polygon: state.polygon.copyWith(color: polygonColor),
+        selectedId: 0,
+      ));
+    }
+  }
+
+  void _onSetIndexEvent(SetIndexEvent event, Emitter<CollisionState> emit) {
+    final isTouchPolygon = _isTouchPolygon(event.touchPoint);
+    emit(CollisionState(
+        selectedId: isTouchPolygon ? 1 : 0,
+        point: state.point,
+        polygon: state.polygon));
   }
 
   Vector2 _vec2FromOffset(Offset offset) => Vector2(offset.dx, offset.dy);
@@ -111,10 +116,10 @@ class CollisionBloc extends Bloc<CollisionEvent, CollisionState> {
         if (point.dx <
             (polygonPoints[i].dx +
                 (vt * (polygonPoints[i + 1].dx - polygonPoints[i].dx)))) {
-          ++cn;
+          cn++;
         }
       }
     }
-    return (cn % 2 == 1);
+    return cn % 2 == 1;
   }
 }
