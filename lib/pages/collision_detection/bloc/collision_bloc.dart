@@ -10,8 +10,9 @@ class CollisionBloc extends Bloc<CollisionEvent, CollisionState> {
   CollisionBloc() : super(const CollisionState()) {
     on<UpdatePointEvent>((event, emit) {
       final isTargetPolygon = state.isTargetPolygon;
-      final polygonColor =
-          _existInPolygon() ? const Color(0xFFFF0000) : const Color(0xFF000000);
+      final polygonColor = _existInPolygonWithCrossingNumber()
+          ? const Color(0xFFFF0000)
+          : const Color(0xFF000000);
       if (isTargetPolygon) {
         emit(CollisionState(
           polygon: state.polygon.copyWith(
@@ -87,5 +88,33 @@ class CollisionBloc extends Bloc<CollisionEvent, CollisionState> {
       }
     }
     return true;
+  }
+
+  // https://www.nttpc.co.jp/technology/number_algorithm.html より
+  bool _existInPolygonWithCrossingNumber() {
+    final polygonPoints = state.polygonPoints;
+    final point = state.point.center;
+    int cn = 0;
+    for (int i = 0; i < polygonPoints.length - 1; i++) {
+      // 上向きの辺。点Pがy軸方向について、始点と終点の間にある。ただし、終点は含まない。(ルール1)
+      if (((polygonPoints[i].dy <= point.dy) &&
+              (polygonPoints[i + 1].dy > point.dy))
+          // 下向きの辺。点Pがy軸方向について、始点と終点の間にある。ただし、始点は含まない。(ルール2)
+          ||
+          ((polygonPoints[i].dy > point.dy) &&
+              (polygonPoints[i + 1].dy <= point.dy))) {
+        // ルール1,ルール2を確認することで、ルール3も確認できている。
+        // 辺は点pよりも右側にある。ただし、重ならない。(ルール4)
+        // 辺が点pと同じ高さになる位置を特定し、その時のxの値と点pのxの値を比較する。
+        final vt = (point.dy - polygonPoints[i].dy) /
+            (polygonPoints[i + 1].dy - polygonPoints[i].dy);
+        if (point.dx <
+            (polygonPoints[i].dx +
+                (vt * (polygonPoints[i + 1].dx - polygonPoints[i].dx)))) {
+          ++cn;
+        }
+      }
+    }
+    return (cn % 2 == 1);
   }
 }
