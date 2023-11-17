@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/pages/collision_detection/views/collision_detection_page.dart';
 import 'package:flutter_samples/pages/earth/earth_page.dart';
+import 'package:flutter_samples/pages/freeman_chain/freeman_chain_page.dart';
 import 'package:flutter_samples/pages/home/home_page.dart';
 import 'package:flutter_samples/router/router_paths.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +27,11 @@ final router = GoRouter(
       path: collisionDetectionPath,
       pageBuilder: (context, state) =>
           const MaterialPage(child: CollisionDetectionPage()),
+    ),
+    GoRoute(
+      path: freemanChainPath,
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: FreemanChainPage()),
     ),
   ],
 );

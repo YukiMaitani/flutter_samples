@@ -23,6 +23,7 @@ class HomePage extends StatelessWidget {
         _buildListTile(
             title: 'Collision Detection', path: collisionDetectionPath),
         _buildListTile(title: 'Earth', path: earthPath),
+        _buildListTile(title: 'Freeman Chain', path: freemanChainPath),
       ],
     );
   }
