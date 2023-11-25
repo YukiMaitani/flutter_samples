@@ -3,6 +3,7 @@ import 'package:flutter_samples/pages/collision_detection/views/collision_detect
 import 'package:flutter_samples/pages/earth/earth_page.dart';
 import 'package:flutter_samples/pages/freeman_chain/freeman_chain_page.dart';
 import 'package:flutter_samples/pages/home/home_page.dart';
+import 'package:flutter_samples/pages/minesweeper/views/minesweeper_page.dart';
 import 'package:flutter_samples/router/router_paths.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +33,11 @@ final router = GoRouter(
       path: freemanChainPath,
       pageBuilder: (context, state) =>
           const MaterialPage(child: FreemanChainPage()),
+    ),
+    GoRoute(
+      path: minesweeperPath,
+      pageBuilder: (context, state) =>
+          const MaterialPage(child: MinesweeperPage()),
     ),
   ],
 );
