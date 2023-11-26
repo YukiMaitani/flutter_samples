@@ -5,3 +5,5 @@ abstract class MinesweeperEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class MinesweeperStartEvent extends MinesweeperEvent {}

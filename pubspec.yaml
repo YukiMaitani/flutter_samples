@@ -34,5 +34,6 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/life_or_death/
+    - assets/images/minesweeper/
     - assets/sounds/
   uses-material-design: true
