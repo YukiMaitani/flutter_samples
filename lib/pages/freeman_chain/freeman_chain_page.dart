@@ -17,13 +17,11 @@ class _FreemanChainPageState extends State<FreemanChainPage> {
   img.Image? _image;
   Uint8List? _bytes;
   List<Offset>? _points;
-  final urlString =
-      'https://1.bp.blogspot.com/-AFpbLLCoBoc/XobS9EbbkLI/AAAAAAABYC8/UesdeSOaj987WQhzpLbd8Z0xvPGeLrlDACNcBGAsYHQ/s1600/animal_chara_lion_king.png';
+  String? urlString;
 
   @override
   void initState() {
     super.initState();
-    setData();
   }
 
   @override
@@ -38,18 +36,47 @@ class _FreemanChainPageState extends State<FreemanChainPage> {
   }
 
   Widget _buildBody() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _buildInputField(),
+        if (urlString != null)
+          Container(
+            child: _bytes != null
+                ? CustomPaint(
+                    painter: MaskPainter(_points!, _image!), child: Container())
+                : const Center(child: CircularProgressIndicator()),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildInputField() {
     return Container(
-      child: _bytes != null
-          ? CustomPaint(
-              painter: MaskPainter(_points!, _image!), child: Container())
-          : const Center(child: CircularProgressIndicator()),
+      padding: const EdgeInsets.all(20),
+      child: TextField(
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'URL',
+        ),
+        onSubmitted: (text) {
+          urlString = text;
+          setState(() {});
+          setData();
+        },
+      ),
     );
   }
 
   Future<void> setData() async {
-    final response = await http.get(Uri.parse(urlString));
+    if (urlString == null) {
+      return;
+    }
+    final response = await http.get(Uri.parse(urlString!));
     _bytes = response.bodyBytes;
-    _image = img.decodeImage(_bytes!)!;
+    final decodeImage = img.decodeImage(_bytes!)!;
+    _image = img.copyResize(decodeImage, width: 320, height: 320);
     _points = extractBoundaryPointsInImage(_image!);
     setState(() {});
   }
