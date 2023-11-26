@@ -6,9 +6,12 @@ import '../util/foundation.dart';
 class MinesweeperState extends Equatable {
   const MinesweeperState({required this.tiles, required this.remainingMines});
 
-  const MinesweeperState.initial()
+  MinesweeperState.initial()
       : this(
-          tiles: const [],
+          tiles: List.generate(
+              MinesweeperFoundation.height,
+              (_) => List.generate(
+                  MinesweeperFoundation.width, (_) => const StartBeforeTile())),
           remainingMines: MinesweeperFoundation.mineCount,
         );
 

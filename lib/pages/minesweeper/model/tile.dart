@@ -10,4 +10,11 @@ class Tile with _$Tile {
     required bool isRevealed,
     required int adjacentBombs,
   }) = _Tile;
+
+  const factory Tile.startBefore({
+    @Default(false) bool isMine,
+    @Default(false) bool isFlagged,
+    @Default(false) bool isRevealed,
+    @Default(-1) int adjacentBombs,
+  }) = StartBeforeTile;
 }

@@ -20,6 +20,56 @@ mixin _$Tile {
   bool get isFlagged => throw _privateConstructorUsedError;
   bool get isRevealed => throw _privateConstructorUsedError;
   int get adjacentBombs => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)
+        $default, {
+    required TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)
+        startBefore,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        $default, {
+    TResult? Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        startBefore,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        $default, {
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        startBefore,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Tile value) $default, {
+    required TResult Function(StartBeforeTile value) startBefore,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Tile value)? $default, {
+    TResult? Function(StartBeforeTile value)? startBefore,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Tile value)? $default, {
+    TResult Function(StartBeforeTile value)? startBefore,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TileCopyWith<Tile> get copyWith => throw _privateConstructorUsedError;
@@ -164,6 +214,80 @@ class _$TileImpl implements _Tile {
   @pragma('vm:prefer-inline')
   _$$TileImplCopyWith<_$TileImpl> get copyWith =>
       __$$TileImplCopyWithImpl<_$TileImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)
+        $default, {
+    required TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)
+        startBefore,
+  }) {
+    return $default(isMine, isFlagged, isRevealed, adjacentBombs);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        $default, {
+    TResult? Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        startBefore,
+  }) {
+    return $default?.call(isMine, isFlagged, isRevealed, adjacentBombs);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        $default, {
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        startBefore,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(isMine, isFlagged, isRevealed, adjacentBombs);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Tile value) $default, {
+    required TResult Function(StartBeforeTile value) startBefore,
+  }) {
+    return $default(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Tile value)? $default, {
+    TResult? Function(StartBeforeTile value)? startBefore,
+  }) {
+    return $default?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Tile value)? $default, {
+    TResult Function(StartBeforeTile value)? startBefore,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(this);
+    }
+    return orElse();
+  }
 }
 
 abstract class _Tile implements Tile {
@@ -184,5 +308,201 @@ abstract class _Tile implements Tile {
   @override
   @JsonKey(ignore: true)
   _$$TileImplCopyWith<_$TileImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$StartBeforeTileImplCopyWith<$Res>
+    implements $TileCopyWith<$Res> {
+  factory _$$StartBeforeTileImplCopyWith(_$StartBeforeTileImpl value,
+          $Res Function(_$StartBeforeTileImpl) then) =
+      __$$StartBeforeTileImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs});
+}
+
+/// @nodoc
+class __$$StartBeforeTileImplCopyWithImpl<$Res>
+    extends _$TileCopyWithImpl<$Res, _$StartBeforeTileImpl>
+    implements _$$StartBeforeTileImplCopyWith<$Res> {
+  __$$StartBeforeTileImplCopyWithImpl(
+      _$StartBeforeTileImpl _value, $Res Function(_$StartBeforeTileImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isMine = null,
+    Object? isFlagged = null,
+    Object? isRevealed = null,
+    Object? adjacentBombs = null,
+  }) {
+    return _then(_$StartBeforeTileImpl(
+      isMine: null == isMine
+          ? _value.isMine
+          : isMine // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isFlagged: null == isFlagged
+          ? _value.isFlagged
+          : isFlagged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isRevealed: null == isRevealed
+          ? _value.isRevealed
+          : isRevealed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      adjacentBombs: null == adjacentBombs
+          ? _value.adjacentBombs
+          : adjacentBombs // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$StartBeforeTileImpl implements StartBeforeTile {
+  const _$StartBeforeTileImpl(
+      {this.isMine = false,
+      this.isFlagged = false,
+      this.isRevealed = false,
+      this.adjacentBombs = -1});
+
+  @override
+  @JsonKey()
+  final bool isMine;
+  @override
+  @JsonKey()
+  final bool isFlagged;
+  @override
+  @JsonKey()
+  final bool isRevealed;
+  @override
+  @JsonKey()
+  final int adjacentBombs;
+
+  @override
+  String toString() {
+    return 'Tile.startBefore(isMine: $isMine, isFlagged: $isFlagged, isRevealed: $isRevealed, adjacentBombs: $adjacentBombs)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StartBeforeTileImpl &&
+            (identical(other.isMine, isMine) || other.isMine == isMine) &&
+            (identical(other.isFlagged, isFlagged) ||
+                other.isFlagged == isFlagged) &&
+            (identical(other.isRevealed, isRevealed) ||
+                other.isRevealed == isRevealed) &&
+            (identical(other.adjacentBombs, adjacentBombs) ||
+                other.adjacentBombs == adjacentBombs));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, isMine, isFlagged, isRevealed, adjacentBombs);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StartBeforeTileImplCopyWith<_$StartBeforeTileImpl> get copyWith =>
+      __$$StartBeforeTileImplCopyWithImpl<_$StartBeforeTileImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)
+        $default, {
+    required TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)
+        startBefore,
+  }) {
+    return startBefore(isMine, isFlagged, isRevealed, adjacentBombs);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        $default, {
+    TResult? Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        startBefore,
+  }) {
+    return startBefore?.call(isMine, isFlagged, isRevealed, adjacentBombs);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        $default, {
+    TResult Function(
+            bool isMine, bool isFlagged, bool isRevealed, int adjacentBombs)?
+        startBefore,
+    required TResult orElse(),
+  }) {
+    if (startBefore != null) {
+      return startBefore(isMine, isFlagged, isRevealed, adjacentBombs);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Tile value) $default, {
+    required TResult Function(StartBeforeTile value) startBefore,
+  }) {
+    return startBefore(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Tile value)? $default, {
+    TResult? Function(StartBeforeTile value)? startBefore,
+  }) {
+    return startBefore?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Tile value)? $default, {
+    TResult Function(StartBeforeTile value)? startBefore,
+    required TResult orElse(),
+  }) {
+    if (startBefore != null) {
+      return startBefore(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class StartBeforeTile implements Tile {
+  const factory StartBeforeTile(
+      {final bool isMine,
+      final bool isFlagged,
+      final bool isRevealed,
+      final int adjacentBombs}) = _$StartBeforeTileImpl;
+
+  @override
+  bool get isMine;
+  @override
+  bool get isFlagged;
+  @override
+  bool get isRevealed;
+  @override
+  int get adjacentBombs;
+  @override
+  @JsonKey(ignore: true)
+  _$$StartBeforeTileImplCopyWith<_$StartBeforeTileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

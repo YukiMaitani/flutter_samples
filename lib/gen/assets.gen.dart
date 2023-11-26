@@ -42,12 +42,12 @@ class $AssetsImagesLifeOrDeathGen {
 class $AssetsImagesMinesweeperGen {
   const $AssetsImagesMinesweeperGen();
 
-  /// File path: assets/images/minesweeper/minesweeper.png
-  AssetGenImage get minesweeper =>
-      const AssetGenImage('assets/images/minesweeper/minesweeper.png');
+  /// File path: assets/images/minesweeper/tile.png
+  AssetGenImage get tile =>
+      const AssetGenImage('assets/images/minesweeper/tile.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [minesweeper];
+  List<AssetGenImage> get values => [tile];
 }
 
 class Assets {

@@ -4,5 +4,5 @@ import 'minesweeper_event.dart';
 import 'minesweeper_state.dart';
 
 class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
-  MinesweeperBloc() : super(const MinesweeperState.initial());
+  MinesweeperBloc() : super(MinesweeperState.initial());
 }
