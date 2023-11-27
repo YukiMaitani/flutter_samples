@@ -16,6 +16,41 @@ class TileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (tile.isRevealed) {
+      if (tile.adjacentBombs == 0) {
+        return _buildRevealed0Tile();
+      }
+      if (tile.adjacentBombs == 1) {
+        return _buildRevealed1Tile();
+      }
+      if (tile.adjacentBombs == 2) {
+        return _buildRevealed2Tile();
+      }
+      if (tile.adjacentBombs == 3) {
+        return _buildRevealed3Tile();
+      }
+      if (tile.adjacentBombs == 4) {
+        return _buildRevealed4Tile();
+      }
+      if (tile.adjacentBombs == 5) {
+        return _buildRevealed5Tile();
+      }
+      if (tile.adjacentBombs == 6) {
+        return _buildRevealed6Tile();
+      }
+      if (tile.adjacentBombs == 7) {
+        return _buildRevealed7Tile();
+      }
+      if (tile.adjacentBombs == 8) {
+        return _buildRevealed8Tile();
+      }
+      if (tile.isMine) {
+        return _buildRevealedMineTile();
+      }
+    }
+    if (tile.isFlagged) {
+      return _buildUnRevealedFlaggedTile();
+    }
     return _buildUnRevealedTile();
   }
 
@@ -24,11 +59,51 @@ class TileImage extends StatelessWidget {
     return SpriteWidget(sprite: sprite);
   }
 
-  Widget _buildFlaggedTile() {
-    return _buildTile(0, 0);
-  }
-
   Widget _buildUnRevealedTile() {
     return _buildTile(3, 2);
+  }
+
+  Widget _buildUnRevealedFlaggedTile() {
+    return Stack(children: [_buildUnRevealedTile(), _buildTile(0, 2)]);
+  }
+
+  Widget _buildRevealed0Tile() {
+    return const SizedBox();
+  }
+
+  Widget _buildRevealed1Tile() {
+    return _buildTile(1, 0);
+  }
+
+  Widget _buildRevealed2Tile() {
+    return _buildTile(1, 1);
+  }
+
+  Widget _buildRevealed3Tile() {
+    return _buildTile(1, 2);
+  }
+
+  Widget _buildRevealed4Tile() {
+    return _buildTile(1, 3);
+  }
+
+  Widget _buildRevealed5Tile() {
+    return _buildTile(2, 0);
+  }
+
+  Widget _buildRevealed6Tile() {
+    return _buildTile(2, 1);
+  }
+
+  Widget _buildRevealed7Tile() {
+    return _buildTile(2, 2);
+  }
+
+  Widget _buildRevealed8Tile() {
+    return _buildTile(2, 3);
+  }
+
+  Widget _buildRevealedMineTile() {
+    return _buildTile(0, 0);
   }
 }
