@@ -6,4 +6,9 @@ abstract class MinesweeperEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class MinesweeperStartEvent extends MinesweeperEvent {}
+class MinesweeperStartEvent extends MinesweeperEvent {
+  final int selectIndex;
+  const MinesweeperStartEvent(this.selectIndex);
+  @override
+  List<Object> get props => [selectIndex];
+}

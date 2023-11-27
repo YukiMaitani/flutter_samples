@@ -4,10 +4,10 @@ int getFlattenIndex(int x, int y) {
   return x + y * MinesweeperFoundation.width;
 }
 
-(int x, int y) getCoordinate(int index) {
+({int x, int y}) getCoordinate(int index) {
   return (
-    index % MinesweeperFoundation.width,
-    index ~/ MinesweeperFoundation.width
+    x: index % MinesweeperFoundation.width,
+    y: index ~/ MinesweeperFoundation.width
   );
 }
 

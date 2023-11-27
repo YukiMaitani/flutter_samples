@@ -7,6 +7,7 @@ import 'package:flutter_samples/pages/minesweeper/bloc/minesweeper_bloc.dart';
 import 'package:flutter_samples/pages/minesweeper/bloc/minesweeper_state.dart';
 import 'package:flutter_samples/pages/minesweeper/util/foundation.dart';
 
+import '../bloc/minesweeper_event.dart';
 import '../widgets/tile_image.dart';
 
 class MinesweeperView extends StatefulWidget {
@@ -82,11 +83,17 @@ class _MinesweeperViewState extends State<MinesweeperView> {
             mainAxisSpacing: 0,
           ),
           itemBuilder: (BuildContext context, int index) {
-            final column = index ~/ MinesweeperFoundation.width;
-            final row = index % MinesweeperFoundation.width;
-            return TileImage(
-              state.tiles[column][row],
-              _tileSheet!,
+            final y = index ~/ MinesweeperFoundation.width;
+            final x = index % MinesweeperFoundation.width;
+            return GestureDetector(
+              onTap: () {
+                minesweeperBloc.add(MinesweeperStartEvent(index));
+                setState(() {});
+              },
+              child: TileImage(
+                state.tiles[y][x],
+                _tileSheet!,
+              ),
             );
           },
         );

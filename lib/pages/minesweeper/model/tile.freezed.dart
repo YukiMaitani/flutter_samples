@@ -170,12 +170,13 @@ class __$$TileImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TileImpl implements _Tile {
+class _$TileImpl extends _Tile {
   const _$TileImpl(
       {required this.isMine,
       required this.isFlagged,
       required this.isRevealed,
-      required this.adjacentBombs});
+      required this.adjacentBombs})
+      : super._();
 
   @override
   final bool isMine;
@@ -290,12 +291,13 @@ class _$TileImpl implements _Tile {
   }
 }
 
-abstract class _Tile implements Tile {
+abstract class _Tile extends Tile {
   const factory _Tile(
       {required final bool isMine,
       required final bool isFlagged,
       required final bool isRevealed,
       required final int adjacentBombs}) = _$TileImpl;
+  const _Tile._() : super._();
 
   @override
   bool get isMine;
@@ -361,12 +363,13 @@ class __$$StartBeforeTileImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StartBeforeTileImpl implements StartBeforeTile {
+class _$StartBeforeTileImpl extends StartBeforeTile {
   const _$StartBeforeTileImpl(
       {this.isMine = false,
       this.isFlagged = false,
       this.isRevealed = false,
-      this.adjacentBombs = -1});
+      this.adjacentBombs = -1})
+      : super._();
 
   @override
   @JsonKey()
@@ -486,12 +489,13 @@ class _$StartBeforeTileImpl implements StartBeforeTile {
   }
 }
 
-abstract class StartBeforeTile implements Tile {
+abstract class StartBeforeTile extends Tile {
   const factory StartBeforeTile(
       {final bool isMine,
       final bool isFlagged,
       final bool isRevealed,
       final int adjacentBombs}) = _$StartBeforeTileImpl;
+  const StartBeforeTile._() : super._();
 
   @override
   bool get isMine;

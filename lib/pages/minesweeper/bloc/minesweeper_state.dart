@@ -12,7 +12,7 @@ class MinesweeperState extends Equatable {
               MinesweeperFoundation.height,
               (_) => List.generate(
                   MinesweeperFoundation.width, (_) => const StartBeforeTile())),
-          remainingMines: MinesweeperFoundation.mineCount,
+          remainingMines: MinesweeperFoundation.minesNum,
         );
 
   final List<List<Tile>> tiles;
@@ -29,5 +29,5 @@ class MinesweeperState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [tiles, remainingMines];
 }
