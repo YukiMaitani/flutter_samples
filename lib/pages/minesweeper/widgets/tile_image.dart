@@ -17,31 +17,31 @@ class TileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (tile.isRevealed) {
-      if (tile.adjacentBombs == 0) {
+      if (tile.adjacentMinesNum == 0) {
         return _buildRevealed0Tile();
       }
-      if (tile.adjacentBombs == 1) {
+      if (tile.adjacentMinesNum == 1) {
         return _buildRevealed1Tile();
       }
-      if (tile.adjacentBombs == 2) {
+      if (tile.adjacentMinesNum == 2) {
         return _buildRevealed2Tile();
       }
-      if (tile.adjacentBombs == 3) {
+      if (tile.adjacentMinesNum == 3) {
         return _buildRevealed3Tile();
       }
-      if (tile.adjacentBombs == 4) {
+      if (tile.adjacentMinesNum == 4) {
         return _buildRevealed4Tile();
       }
-      if (tile.adjacentBombs == 5) {
+      if (tile.adjacentMinesNum == 5) {
         return _buildRevealed5Tile();
       }
-      if (tile.adjacentBombs == 6) {
+      if (tile.adjacentMinesNum == 6) {
         return _buildRevealed6Tile();
       }
-      if (tile.adjacentBombs == 7) {
+      if (tile.adjacentMinesNum == 7) {
         return _buildRevealed7Tile();
       }
-      if (tile.adjacentBombs == 8) {
+      if (tile.adjacentMinesNum == 8) {
         return _buildRevealed8Tile();
       }
       if (tile.isMine) {

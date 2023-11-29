@@ -44,7 +44,10 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     for (var i = 0; i < MinesweeperFoundation.minesNum; i++) {
       final index =
           placeableIndexes.removeAt(Random().nextInt(placeableIndexes.length));
-      tiles.setTileWithI(index, isMine: true, adjacentBombs: 9);
+      tiles.setTileWithI(index, isMine: true);
+    }
+    for (final tile in tiles.expand((e) => e).where((e) => !e.isMine)) {
+      tiles.setAdjacentMinesNum(tile.x, tile.y);
     }
     emit(state.copyWith(tiles: tiles));
   }
@@ -65,7 +68,7 @@ extension TileMatrixExtension on List<List<Tile>> {
       isMine: isMine,
       isFlagged: isFlagged,
       isRevealed: isRevealed,
-      adjacentBombs: adjacentBombs,
+      adjacentMinesNum: adjacentBombs,
     );
   }
 
@@ -84,5 +87,32 @@ extension TileMatrixExtension on List<List<Tile>> {
   void setTileWithT(Tile tile, int index) {
     final coordinate = getCoordinate(index);
     this[coordinate.y][coordinate.x] = tile;
+  }
+
+  List<Tile> getAdjacentTiles(int x, int y) {
+    final result = <Tile>[];
+    for (int i = -1; i <= 1; i++) {
+      for (int j = -1; j <= 1; j++) {
+        final newX = x + i;
+        final newY = y + j;
+        if (isOutOfBound(newX, newY)) {
+          continue;
+        }
+        result.add(this[newY][newX]);
+      }
+    }
+    return result;
+  }
+
+  int getAdjacentMinesNum(int x, int y) {
+    return getAdjacentTiles(x, y).where((tile) => tile.isMine).length;
+  }
+
+  void setAdjacentMinesNum(int x, int y) {
+    final adjacentMinesNum = getAdjacentMinesNum(x, y);
+    setTileWithC(
+      coordinate: (x: x, y: y),
+      adjacentBombs: adjacentMinesNum,
+    );
   }
 }

@@ -21,34 +21,34 @@ mixin _$Tile {
   bool get isMine => throw _privateConstructorUsedError;
   bool get isFlagged => throw _privateConstructorUsedError;
   bool get isRevealed => throw _privateConstructorUsedError;
-  int get adjacentBombs => throw _privateConstructorUsedError;
+  int get adjacentMinesNum => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)
+            int adjacentMinesNum)
         $default, {
     required TResult Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)
+            bool isRevealed, int adjacentMinesNum)
         before,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)?
+            bool isRevealed, int adjacentMinesNum)?
         $default, {
     TResult? Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)?
+            bool isRevealed, int adjacentMinesNum)?
         before,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)?
+            int adjacentMinesNum)?
         $default, {
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)?
+            int adjacentMinesNum)?
         before,
     required TResult orElse(),
   }) =>
@@ -88,7 +88,7 @@ abstract class $TileCopyWith<$Res> {
       bool isMine,
       bool isFlagged,
       bool isRevealed,
-      int adjacentBombs});
+      int adjacentMinesNum});
 }
 
 /// @nodoc
@@ -109,7 +109,7 @@ class _$TileCopyWithImpl<$Res, $Val extends Tile>
     Object? isMine = null,
     Object? isFlagged = null,
     Object? isRevealed = null,
-    Object? adjacentBombs = null,
+    Object? adjacentMinesNum = null,
   }) {
     return _then(_value.copyWith(
       x: null == x
@@ -132,9 +132,9 @@ class _$TileCopyWithImpl<$Res, $Val extends Tile>
           ? _value.isRevealed
           : isRevealed // ignore: cast_nullable_to_non_nullable
               as bool,
-      adjacentBombs: null == adjacentBombs
-          ? _value.adjacentBombs
-          : adjacentBombs // ignore: cast_nullable_to_non_nullable
+      adjacentMinesNum: null == adjacentMinesNum
+          ? _value.adjacentMinesNum
+          : adjacentMinesNum // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -153,7 +153,7 @@ abstract class _$$TileImplCopyWith<$Res> implements $TileCopyWith<$Res> {
       bool isMine,
       bool isFlagged,
       bool isRevealed,
-      int adjacentBombs});
+      int adjacentMinesNum});
 }
 
 /// @nodoc
@@ -171,7 +171,7 @@ class __$$TileImplCopyWithImpl<$Res>
     Object? isMine = null,
     Object? isFlagged = null,
     Object? isRevealed = null,
-    Object? adjacentBombs = null,
+    Object? adjacentMinesNum = null,
   }) {
     return _then(_$TileImpl(
       x: null == x
@@ -194,9 +194,9 @@ class __$$TileImplCopyWithImpl<$Res>
           ? _value.isRevealed
           : isRevealed // ignore: cast_nullable_to_non_nullable
               as bool,
-      adjacentBombs: null == adjacentBombs
-          ? _value.adjacentBombs
-          : adjacentBombs // ignore: cast_nullable_to_non_nullable
+      adjacentMinesNum: null == adjacentMinesNum
+          ? _value.adjacentMinesNum
+          : adjacentMinesNum // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -211,7 +211,7 @@ class _$TileImpl extends _Tile {
       required this.isMine,
       required this.isFlagged,
       required this.isRevealed,
-      required this.adjacentBombs})
+      required this.adjacentMinesNum})
       : super._();
 
   @override
@@ -225,11 +225,11 @@ class _$TileImpl extends _Tile {
   @override
   final bool isRevealed;
   @override
-  final int adjacentBombs;
+  final int adjacentMinesNum;
 
   @override
   String toString() {
-    return 'Tile(x: $x, y: $y, isMine: $isMine, isFlagged: $isFlagged, isRevealed: $isRevealed, adjacentBombs: $adjacentBombs)';
+    return 'Tile(x: $x, y: $y, isMine: $isMine, isFlagged: $isFlagged, isRevealed: $isRevealed, adjacentMinesNum: $adjacentMinesNum)';
   }
 
   @override
@@ -244,13 +244,13 @@ class _$TileImpl extends _Tile {
                 other.isFlagged == isFlagged) &&
             (identical(other.isRevealed, isRevealed) ||
                 other.isRevealed == isRevealed) &&
-            (identical(other.adjacentBombs, adjacentBombs) ||
-                other.adjacentBombs == adjacentBombs));
+            (identical(other.adjacentMinesNum, adjacentMinesNum) ||
+                other.adjacentMinesNum == adjacentMinesNum));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+      runtimeType, x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
 
   @JsonKey(ignore: true)
   @override
@@ -262,41 +262,42 @@ class _$TileImpl extends _Tile {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)
+            int adjacentMinesNum)
         $default, {
     required TResult Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)
+            bool isRevealed, int adjacentMinesNum)
         before,
   }) {
-    return $default(x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+    return $default(x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)?
+            bool isRevealed, int adjacentMinesNum)?
         $default, {
     TResult? Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)?
+            bool isRevealed, int adjacentMinesNum)?
         before,
   }) {
-    return $default?.call(x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+    return $default?.call(
+        x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)?
+            int adjacentMinesNum)?
         $default, {
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)?
+            int adjacentMinesNum)?
         before,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+      return $default(x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
     }
     return orElse();
   }
@@ -340,7 +341,7 @@ abstract class _Tile extends Tile {
       required final bool isMine,
       required final bool isFlagged,
       required final bool isRevealed,
-      required final int adjacentBombs}) = _$TileImpl;
+      required final int adjacentMinesNum}) = _$TileImpl;
   const _Tile._() : super._();
 
   @override
@@ -354,7 +355,7 @@ abstract class _Tile extends Tile {
   @override
   bool get isRevealed;
   @override
-  int get adjacentBombs;
+  int get adjacentMinesNum;
   @override
   @JsonKey(ignore: true)
   _$$TileImplCopyWith<_$TileImpl> get copyWith =>
@@ -374,7 +375,7 @@ abstract class _$$BeforeTileImplCopyWith<$Res> implements $TileCopyWith<$Res> {
       bool isMine,
       bool isFlagged,
       bool isRevealed,
-      int adjacentBombs});
+      int adjacentMinesNum});
 }
 
 /// @nodoc
@@ -393,7 +394,7 @@ class __$$BeforeTileImplCopyWithImpl<$Res>
     Object? isMine = null,
     Object? isFlagged = null,
     Object? isRevealed = null,
-    Object? adjacentBombs = null,
+    Object? adjacentMinesNum = null,
   }) {
     return _then(_$BeforeTileImpl(
       x: null == x
@@ -416,9 +417,9 @@ class __$$BeforeTileImplCopyWithImpl<$Res>
           ? _value.isRevealed
           : isRevealed // ignore: cast_nullable_to_non_nullable
               as bool,
-      adjacentBombs: null == adjacentBombs
-          ? _value.adjacentBombs
-          : adjacentBombs // ignore: cast_nullable_to_non_nullable
+      adjacentMinesNum: null == adjacentMinesNum
+          ? _value.adjacentMinesNum
+          : adjacentMinesNum // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -433,7 +434,7 @@ class _$BeforeTileImpl extends BeforeTile {
       this.isMine = false,
       this.isFlagged = false,
       this.isRevealed = false,
-      this.adjacentBombs = -1})
+      this.adjacentMinesNum = -1})
       : super._();
 
   @override
@@ -451,11 +452,11 @@ class _$BeforeTileImpl extends BeforeTile {
   final bool isRevealed;
   @override
   @JsonKey()
-  final int adjacentBombs;
+  final int adjacentMinesNum;
 
   @override
   String toString() {
-    return 'Tile.before(x: $x, y: $y, isMine: $isMine, isFlagged: $isFlagged, isRevealed: $isRevealed, adjacentBombs: $adjacentBombs)';
+    return 'Tile.before(x: $x, y: $y, isMine: $isMine, isFlagged: $isFlagged, isRevealed: $isRevealed, adjacentMinesNum: $adjacentMinesNum)';
   }
 
   @override
@@ -470,13 +471,13 @@ class _$BeforeTileImpl extends BeforeTile {
                 other.isFlagged == isFlagged) &&
             (identical(other.isRevealed, isRevealed) ||
                 other.isRevealed == isRevealed) &&
-            (identical(other.adjacentBombs, adjacentBombs) ||
-                other.adjacentBombs == adjacentBombs));
+            (identical(other.adjacentMinesNum, adjacentMinesNum) ||
+                other.adjacentMinesNum == adjacentMinesNum));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+      runtimeType, x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
 
   @JsonKey(ignore: true)
   @override
@@ -488,41 +489,41 @@ class _$BeforeTileImpl extends BeforeTile {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)
+            int adjacentMinesNum)
         $default, {
     required TResult Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)
+            bool isRevealed, int adjacentMinesNum)
         before,
   }) {
-    return before(x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+    return before(x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)?
+            bool isRevealed, int adjacentMinesNum)?
         $default, {
     TResult? Function(int x, int y, bool isMine, bool isFlagged,
-            bool isRevealed, int adjacentBombs)?
+            bool isRevealed, int adjacentMinesNum)?
         before,
   }) {
-    return before?.call(x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+    return before?.call(x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)?
+            int adjacentMinesNum)?
         $default, {
     TResult Function(int x, int y, bool isMine, bool isFlagged, bool isRevealed,
-            int adjacentBombs)?
+            int adjacentMinesNum)?
         before,
     required TResult orElse(),
   }) {
     if (before != null) {
-      return before(x, y, isMine, isFlagged, isRevealed, adjacentBombs);
+      return before(x, y, isMine, isFlagged, isRevealed, adjacentMinesNum);
     }
     return orElse();
   }
@@ -566,7 +567,7 @@ abstract class BeforeTile extends Tile {
       final bool isMine,
       final bool isFlagged,
       final bool isRevealed,
-      final int adjacentBombs}) = _$BeforeTileImpl;
+      final int adjacentMinesNum}) = _$BeforeTileImpl;
   const BeforeTile._() : super._();
 
   @override
@@ -580,7 +581,7 @@ abstract class BeforeTile extends Tile {
   @override
   bool get isRevealed;
   @override
-  int get adjacentBombs;
+  int get adjacentMinesNum;
   @override
   @JsonKey(ignore: true)
   _$$BeforeTileImplCopyWith<_$BeforeTileImpl> get copyWith =>

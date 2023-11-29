@@ -27,7 +27,8 @@ class MinesweeperState extends Equatable {
         .every((row) => row.every((tile) => tile.isMine || tile.isRevealed))) {
       return GameState.won;
     }
-    if (tiles.every((row) => row.every((tile) => tile.adjacentBombs == -1))) {
+    if (tiles
+        .every((row) => row.every((tile) => tile.adjacentMinesNum == -1))) {
       return GameState.before;
     }
     return GameState.playing;

@@ -10,7 +10,7 @@ class Tile with _$Tile {
     required bool isMine,
     required bool isFlagged,
     required bool isRevealed,
-    required int adjacentBombs,
+    required int adjacentMinesNum,
   }) = _Tile;
 
   const Tile._();
@@ -21,17 +21,17 @@ class Tile with _$Tile {
     @Default(false) bool isMine,
     @Default(false) bool isFlagged,
     @Default(false) bool isRevealed,
-    @Default(-1) int adjacentBombs,
+    @Default(-1) int adjacentMinesNum,
   }) = BeforeTile;
 
   Tile nullCopyWith(
           {bool? isMine,
           bool? isFlagged,
           bool? isRevealed,
-          int? adjacentBombs}) =>
+          int? adjacentMinesNum}) =>
       copyWith(
           isMine: isMine ?? this.isMine,
           isFlagged: isFlagged ?? this.isFlagged,
           isRevealed: isRevealed ?? this.isRevealed,
-          adjacentBombs: adjacentBombs ?? this.adjacentBombs);
+          adjacentMinesNum: adjacentMinesNum ?? this.adjacentMinesNum);
 }
