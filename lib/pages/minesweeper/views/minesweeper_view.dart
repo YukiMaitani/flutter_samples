@@ -87,7 +87,7 @@ class _MinesweeperViewState extends State<MinesweeperView> {
             final x = index % MinesweeperFoundation.width;
             return GestureDetector(
               onTap: () {
-                minesweeperBloc.add(MinesweeperStartEvent(index));
+                minesweeperBloc.add(SelectTile(index));
                 setState(() {});
               },
               child: TileImage(

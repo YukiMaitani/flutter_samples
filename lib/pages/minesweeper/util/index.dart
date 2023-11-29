@@ -17,3 +17,18 @@ bool isOutOfBound(int x, int y) {
       y < 0 ||
       y >= MinesweeperFoundation.height;
 }
+
+List<({int x, int y})> getAroundSquares(int x, int y) {
+  final result = <({int x, int y})>[];
+  for (int i = -1; i <= 1; i++) {
+    for (int j = -1; j <= 1; j++) {
+      final newX = x + i;
+      final newY = y + j;
+      if (isOutOfBound(newX, newY)) {
+        continue;
+      }
+      result.add((x: newX, y: newY));
+    }
+  }
+  return result;
+}

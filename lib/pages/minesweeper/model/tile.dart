@@ -13,12 +13,12 @@ class Tile with _$Tile {
 
   const Tile._();
 
-  const factory Tile.startBefore({
+  const factory Tile.before({
     @Default(false) bool isMine,
     @Default(false) bool isFlagged,
     @Default(false) bool isRevealed,
     @Default(-1) int adjacentBombs,
-  }) = StartBeforeTile;
+  }) = BeforeTile;
 
   Tile nullCopyWith(
           {bool? isMine,

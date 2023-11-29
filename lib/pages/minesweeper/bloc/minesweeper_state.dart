@@ -3,6 +3,8 @@ import 'package:flutter_samples/pages/minesweeper/model/tile.dart';
 
 import '../util/foundation.dart';
 
+enum GameState { before, playing, won, lost }
+
 class MinesweeperState extends Equatable {
   const MinesweeperState({required this.tiles, required this.remainingMines});
 
@@ -11,12 +13,25 @@ class MinesweeperState extends Equatable {
           tiles: List.generate(
               MinesweeperFoundation.height,
               (_) => List.generate(
-                  MinesweeperFoundation.width, (_) => const StartBeforeTile())),
+                  MinesweeperFoundation.width, (_) => const BeforeTile())),
           remainingMines: MinesweeperFoundation.minesNum,
         );
 
   final List<List<Tile>> tiles;
   final int remainingMines;
+  GameState get gameState {
+    if (tiles.any((row) => row.any((tile) => tile.isMine && tile.isRevealed))) {
+      return GameState.lost;
+    }
+    if (tiles
+        .every((row) => row.every((tile) => tile.isMine || tile.isRevealed))) {
+      return GameState.won;
+    }
+    if (tiles.every((row) => row.every((tile) => tile.adjacentBombs == -1))) {
+      return GameState.before;
+    }
+    return GameState.playing;
+  }
 
   MinesweeperState copyWith({
     List<List<Tile>>? tiles,
