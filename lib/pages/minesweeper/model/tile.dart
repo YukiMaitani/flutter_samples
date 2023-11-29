@@ -5,6 +5,8 @@ part 'tile.freezed.dart';
 @freezed
 class Tile with _$Tile {
   const factory Tile({
+    required int x,
+    required int y,
     required bool isMine,
     required bool isFlagged,
     required bool isRevealed,
@@ -14,6 +16,8 @@ class Tile with _$Tile {
   const Tile._();
 
   const factory Tile.before({
+    required int x,
+    required int y,
     @Default(false) bool isMine,
     @Default(false) bool isFlagged,
     @Default(false) bool isRevealed,

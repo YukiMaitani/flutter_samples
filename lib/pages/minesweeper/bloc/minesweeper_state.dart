@@ -12,8 +12,8 @@ class MinesweeperState extends Equatable {
       : this(
           tiles: List.generate(
               MinesweeperFoundation.height,
-              (_) => List.generate(
-                  MinesweeperFoundation.width, (_) => const BeforeTile())),
+              (y) => List.generate(
+                  MinesweeperFoundation.width, (x) => BeforeTile(x: x, y: y))),
           remainingMines: MinesweeperFoundation.minesNum,
         );
 
