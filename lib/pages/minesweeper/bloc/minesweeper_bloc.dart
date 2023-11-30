@@ -47,7 +47,7 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
       tiles.setTileWithI(index, isMine: true);
     }
     for (final tile in tiles.expand((e) => e).where((e) => !e.isMine)) {
-      tiles.setAdjacentMinesNum(tile.x, tile.y);
+      tiles.setAdjacentMinesNum(tile);
     }
     emit(state.copyWith(tiles: tiles));
   }
@@ -108,11 +108,8 @@ extension TileMatrixExtension on List<List<Tile>> {
     return getAdjacentTiles(x, y).where((tile) => tile.isMine).length;
   }
 
-  void setAdjacentMinesNum(int x, int y) {
-    final adjacentMinesNum = getAdjacentMinesNum(x, y);
-    setTileWithC(
-      coordinate: (x: x, y: y),
-      adjacentBombs: adjacentMinesNum,
-    );
+  void setAdjacentMinesNum(Tile tile) {
+    final adjacentMinesNum = getAdjacentMinesNum(tile.x, tile.y);
+    this[tile.y][tile.x] = tile.copyWith(adjacentMinesNum: adjacentMinesNum);
   }
 }
