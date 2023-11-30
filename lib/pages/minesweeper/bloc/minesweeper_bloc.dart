@@ -36,11 +36,11 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
 
   void _initGame(int selectIndex, Emitter<MinesweeperState> emit) {
     final tiles = state.tiles;
-    tiles.setTileWithI(selectIndex, adjacentBombs: 0);
     final placeableIndexes = List.generate(
         MinesweeperFoundation.width * MinesweeperFoundation.height,
-        (index) => index)
-      ..remove(selectIndex);
+        (index) => index);
+    final removeList = [...tiles.getAdjacentIndexes(selectIndex), selectIndex];
+    placeableIndexes.removeWhere((index) => removeList.contains(index));
     for (var i = 0; i < MinesweeperFoundation.minesNum; i++) {
       final index =
           placeableIndexes.removeAt(Random().nextInt(placeableIndexes.length));
@@ -99,6 +99,22 @@ extension TileMatrixExtension on List<List<Tile>> {
           continue;
         }
         result.add(this[newY][newX]);
+      }
+    }
+    return result;
+  }
+
+  List<int> getAdjacentIndexes(int index) {
+    final coordinate = getCoordinate(index);
+    final result = <int>[];
+    for (int i = -1; i <= 1; i++) {
+      for (int j = -1; j <= 1; j++) {
+        final newX = coordinate.x + i;
+        final newY = coordinate.y + j;
+        if (isOutOfBound(newX, newY)) {
+          continue;
+        }
+        result.add(getFlattenIndex(newX, newY));
       }
     }
     return result;
