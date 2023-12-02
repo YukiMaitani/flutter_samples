@@ -10,11 +10,10 @@ import 'minesweeper_state.dart';
 
 class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
   MinesweeperBloc() : super(MinesweeperState.initial()) {
-    on<SelectTile>(_onMinesweeperStartEvent);
+    on<SelectTile>(_onSelectTileEvent);
   }
 
-  void _onMinesweeperStartEvent(
-      SelectTile event, Emitter<MinesweeperState> emit) {
+  void _onSelectTileEvent(SelectTile event, Emitter<MinesweeperState> emit) {
     final selectIndex = event.selectIndex;
     if (state.gameState == GameState.before) {
       _initGame(selectIndex, emit);
@@ -32,15 +31,14 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
       {required Tile selectTile,
       List<Tile> preZeroTiles = const [],
       required List<List<Tile>> tiles}) {
-    final adjacentTiles =
-        tiles.getAdjacentTilesWithC(selectTile.x, selectTile.y);
-    final adjacentZeroTiles =
-        adjacentTiles.where((e) => e.adjacentMinesNum == 0);
     tiles.setTileWithT(selectTile.copyWith(isRevealed: true));
+    Iterable<Tile> adjacentZeroTiles = [];
     if (selectTile.adjacentMinesNum == 0) {
+      final adjacentTiles = tiles.getAdjacentTilesWithC(selectTile.x, selectTile.y);
       for (final adjacentTile in adjacentTiles) {
         tiles.setTileWithT(adjacentTile.copyWith(isRevealed: true));
       }
+      adjacentZeroTiles = adjacentTiles.where((e) => e.adjacentMinesNum == 0);
     }
     final zeroTiles = [...preZeroTiles, ...adjacentZeroTiles].where((tile) {
       final adjacentTiles = tiles.getAdjacentTilesWithC(tile.x, tile.y);
@@ -50,8 +48,7 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
       emit(state.copyWith(tiles: tiles));
     } else {
       final checkTile = zeroTiles.removeLast();
-      _openTile(emit,
-          selectTile: checkTile, tiles: tiles, preZeroTiles: zeroTiles);
+      _openTile(emit, selectTile: checkTile, tiles: tiles, preZeroTiles: zeroTiles);
     }
   }
 
