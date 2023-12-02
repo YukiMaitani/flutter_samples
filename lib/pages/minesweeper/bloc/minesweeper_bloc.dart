@@ -11,6 +11,7 @@ import 'minesweeper_state.dart';
 class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
   MinesweeperBloc() : super(MinesweeperState.initial()) {
     on<SelectTile>(_onSelectTileEvent);
+    on<ToggleFlagMode>(_onToggleFlagModeEvent);
   }
 
   void _onSelectTileEvent(SelectTile event, Emitter<MinesweeperState> emit) {
@@ -25,6 +26,11 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     } else {
       _openTile(emit, selectTile: selectTile, tiles: tiles);
     }
+  }
+
+  void _onToggleFlagModeEvent(ToggleFlagMode event, Emitter<MinesweeperState> emit) {
+    final isFlagMode = state.isFlagMode;
+    emit(state.copyWith(isFlagMode: !isFlagMode));
   }
 
   void _openTile(Emitter<MinesweeperState> emit,

@@ -6,7 +6,7 @@ import '../util/foundation.dart';
 enum GameState { before, playing, won, lost }
 
 class MinesweeperState extends Equatable {
-  const MinesweeperState({required this.tiles, required this.remainingMines});
+  const MinesweeperState({required this.tiles, required this.remainingMines, required this.isFlagMode});
 
   MinesweeperState.initial()
       : this(
@@ -15,10 +15,12 @@ class MinesweeperState extends Equatable {
               (y) => List.generate(
                   MinesweeperFoundation.width, (x) => BeforeTile(x: x, y: y))),
           remainingMines: MinesweeperFoundation.minesNum,
+          isFlagMode: false,
         );
 
   final List<List<Tile>> tiles;
   final int remainingMines;
+  final bool isFlagMode;
   GameState get gameState {
     if (tiles.any((row) => row.any((tile) => tile.isMine && tile.isRevealed))) {
       return GameState.lost;
@@ -37,13 +39,15 @@ class MinesweeperState extends Equatable {
   MinesweeperState copyWith({
     List<List<Tile>>? tiles,
     int? remainingMines,
+    bool? isFlagMode,
   }) {
     return MinesweeperState(
       tiles: tiles ?? this.tiles,
       remainingMines: remainingMines ?? this.remainingMines,
+      isFlagMode: isFlagMode ?? this.isFlagMode,
     );
   }
 
   @override
-  List<Object?> get props => [tiles, remainingMines];
+  List<Object?> get props => [tiles, remainingMines, isFlagMode];
 }

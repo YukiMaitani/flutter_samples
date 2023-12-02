@@ -1,12 +1,14 @@
 import 'dart:ui' as ui;
 
 import 'package:flame/flame.dart';
+import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_samples/pages/minesweeper/bloc/minesweeper_bloc.dart';
 import 'package:flutter_samples/pages/minesweeper/bloc/minesweeper_state.dart';
 import 'package:flutter_samples/pages/minesweeper/util/foundation.dart';
 
+import '../../../gen/assets.gen.dart';
 import '../bloc/minesweeper_event.dart';
 import '../widgets/tile_image.dart';
 
@@ -19,6 +21,13 @@ class MinesweeperView extends StatefulWidget {
 
 class _MinesweeperViewState extends State<MinesweeperView> {
   ui.Image? _tileSheet;
+  SpriteSheet? get _spriteSheet => _tileSheet == null
+      ? null
+      : SpriteSheet.fromColumnsAndRows(
+          image: _tileSheet!,
+          columns: 4,
+          rows: 4,
+        );
 
   @override
   void initState() {
@@ -42,6 +51,7 @@ class _MinesweeperViewState extends State<MinesweeperView> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: _buildBody(),
       ),
+      floatingActionButton: _buildFlagButton(),
     );
   }
 
@@ -52,7 +62,7 @@ class _MinesweeperViewState extends State<MinesweeperView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (_tileSheet == null)
+          if (_spriteSheet == null)
             const SizedBox()
           else
             Stack(
@@ -92,7 +102,7 @@ class _MinesweeperViewState extends State<MinesweeperView> {
               },
               child: TileImage(
                 state.tiles[y][x],
-                _tileSheet!,
+                _spriteSheet!,
               ),
             );
           },
@@ -112,5 +122,26 @@ class _MinesweeperViewState extends State<MinesweeperView> {
         ),
       ),
     );
+  }
+
+  Widget _buildFlagButton() {
+    if (_spriteSheet == null) {
+      return const SizedBox();
+    }
+    return BlocBuilder<MinesweeperBloc, MinesweeperState>(
+        builder: (BuildContext context, state) {
+          final isFlagMode = state.isFlagMode;
+      return FloatingActionButton(
+        backgroundColor: Colors.grey.shade300,
+        onPressed: () {
+          BlocProvider.of<MinesweeperBloc>(context).add(const ToggleFlagMode());
+          setState(() {});
+        },
+        child: Assets.images.minesweeper.flag.image(
+          width: 36,
+          color: isFlagMode ? Colors.red : Colors.grey.shade600,
+        ),
+      );
+    });
   }
 }

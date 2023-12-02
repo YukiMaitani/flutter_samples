@@ -1,16 +1,11 @@
-import 'dart:ui' as ui;
-
 import 'package:flame/sprite.dart';
 import 'package:flame/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_samples/pages/minesweeper/model/tile.dart';
 
 class TileImage extends StatelessWidget {
-  TileImage(this.tile, this.sheetImage, {super.key})
-      : spriteSheet = SpriteSheet.fromColumnsAndRows(
-            image: sheetImage, columns: 4, rows: 4);
+  TileImage(this.tile, this.spriteSheet, {super.key});
 
-  final ui.Image sheetImage;
   final Tile tile;
   final SpriteSheet spriteSheet;
 
@@ -49,7 +44,7 @@ class TileImage extends StatelessWidget {
       }
     }
     if (tile.isFlagged) {
-      return _buildUnRevealedFlaggedTile();
+      return _buildFlaggedTile();
     }
     return _buildUnRevealedTile();
   }
@@ -63,8 +58,12 @@ class TileImage extends StatelessWidget {
     return _buildTile(3, 2);
   }
 
-  Widget _buildUnRevealedFlaggedTile() {
-    return Stack(children: [_buildUnRevealedTile(), _buildTile(0, 2)]);
+  Widget _buildFlaggedTile() {
+    return Stack(children: [_buildUnRevealedTile(), _buildFragTile()]);
+  }
+
+  Widget _buildFragTile() {
+    return _buildTile(0, 2);
   }
 
   Widget _buildRevealed0Tile() {

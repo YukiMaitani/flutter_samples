@@ -12,3 +12,7 @@ class SelectTile extends MinesweeperEvent {
   @override
   List<Object> get props => [selectIndex];
 }
+
+class ToggleFlagMode extends MinesweeperEvent {
+  const ToggleFlagMode();
+}
