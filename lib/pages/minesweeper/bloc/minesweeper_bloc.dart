@@ -17,20 +17,25 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
 
   void _onSelectTileEvent(SelectTile event, Emitter<MinesweeperState> emit) {
     final selectIndex = event.selectIndex;
-    if (state.gameState == GameState.before) {
-      _initGame(selectIndex, emit);
+    final gameState = state.gameState;
+    if (gameState == GameState.won || gameState == GameState.lost) {
+      return;
     }
     final tiles = state.tiles;
+    if (gameState == GameState.before) {
+      _initGame(selectIndex, tiles);
+    }
     final selectTile = tiles.getTileWithI(selectIndex);
     if (selectTile.isRevealed) {
-      _onChording(emit, selectTile: selectTile, tiles: tiles);
+      _onChording(selectTile, tiles);
     } else {
       if(!state.isFlagMode || state.gameState == GameState.before){
-        _openTile(emit, selectTile: selectTile, tiles: tiles);
+        _openTile(selectTile, tiles);
       } else if(!selectTile.isRevealed){
-        _flagTile(emit, selectTile: selectTile, tiles: tiles);
+        _flagTile(selectTile, tiles);
       }
     }
+    emit(state.copyWith(tiles: tiles));
   }
 
   void _onToggleFlagModeEvent(ToggleFlagMode event, Emitter<MinesweeperState> emit) {
@@ -41,10 +46,8 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     emit(MinesweeperState.initial());
   }
 
-  void _openTile(Emitter<MinesweeperState> emit,
-      {required Tile selectTile,
-      List<Tile> preZeroTiles = const [],
-      required List<List<Tile>> tiles}) {
+  void _openTile(Tile selectTile, List<List<Tile>> tiles, {
+      List<Tile> preZeroTiles = const [],}) {
     tiles.setTileWithT(selectTile.copyWith(isRevealed: true));
     Iterable<Tile> adjacentZeroTiles = [];
     if (selectTile.adjacentMinesNum == 0) {
@@ -59,35 +62,31 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
       return adjacentTiles.any((e) => !e.isRevealed);
     }).toList();
     if (zeroTiles.isEmpty) {
-      emit(state.copyWith(tiles: tiles));
+      return;
     } else {
       final checkTile = zeroTiles.removeLast();
-      _openTile(emit, selectTile: checkTile, tiles: tiles, preZeroTiles: zeroTiles);
+      _openTile(checkTile, tiles, preZeroTiles: zeroTiles);
     }
   }
 
-  void _onChording(Emitter<MinesweeperState> emit,
-      {required Tile selectTile, required List<List<Tile>> tiles}) {
+  void _onChording(Tile selectTile, List<List<Tile>> tiles) {
     final adjacentTiles =
         tiles.getAdjacentTilesWithC(selectTile.x, selectTile.y);
     final adjacentFlags = adjacentTiles.where((e) => e.isFlagged);
     if (adjacentFlags.length == selectTile.adjacentMinesNum) {
       for (final adjacentTile in adjacentTiles) {
         if (!adjacentTile.isFlagged) {
-          _openTile(emit, selectTile: adjacentTile, tiles: tiles);
+          _openTile(adjacentTile, tiles);
         }
       }
     }
   }
 
-  void _flagTile(Emitter<MinesweeperState> emit,
-      {required Tile selectTile,required List<List<Tile>> tiles}) {
+  void _flagTile(Tile selectTile,List<List<Tile>> tiles) {
     tiles.setTileWithT(selectTile.copyWith(isFlagged: !selectTile.isFlagged));
-    emit(state.copyWith(tiles: tiles));
   }
 
-  void _initGame(int selectIndex, Emitter<MinesweeperState> emit) {
-    final tiles = state.tiles;
+  void _initGame(int selectIndex, List<List<Tile>> tiles) {
     final placeableIndexes = List.generate(
         MinesweeperFoundation.width * MinesweeperFoundation.height,
         (index) => index);
@@ -101,7 +100,6 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     for (final tile in tiles.expand((e) => e).where((e) => !e.isMine)) {
       tiles.setAdjacentMinesNum(tile);
     }
-    emit(state.copyWith(tiles: tiles));
   }
 }
 
