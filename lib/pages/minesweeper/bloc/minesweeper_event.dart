@@ -16,3 +16,7 @@ class SelectTile extends MinesweeperEvent {
 class ToggleFlagMode extends MinesweeperEvent {
   const ToggleFlagMode();
 }
+
+class ResetGame extends MinesweeperEvent {
+  const ResetGame();
+}

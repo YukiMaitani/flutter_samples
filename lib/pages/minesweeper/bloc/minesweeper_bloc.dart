@@ -12,6 +12,7 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
   MinesweeperBloc() : super(MinesweeperState.initial()) {
     on<SelectTile>(_onSelectTileEvent);
     on<ToggleFlagMode>(_onToggleFlagModeEvent);
+    on<ResetGame>(_onResetGameEvent);
   }
 
   void _onSelectTileEvent(SelectTile event, Emitter<MinesweeperState> emit) {
@@ -34,6 +35,10 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
 
   void _onToggleFlagModeEvent(ToggleFlagMode event, Emitter<MinesweeperState> emit) {
     emit(state.copyWith(isFlagMode: !state.isFlagMode));
+  }
+
+  void _onResetGameEvent(ResetGame event, Emitter<MinesweeperState> emit) {
+    emit(MinesweeperState.initial());
   }
 
   void _openTile(Emitter<MinesweeperState> emit,

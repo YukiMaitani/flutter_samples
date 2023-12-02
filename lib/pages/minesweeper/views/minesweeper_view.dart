@@ -95,7 +95,10 @@ class _MinesweeperViewState extends State<MinesweeperView> {
           GameState.lost => '😵',
         };
         return Flat3dButton(
-            onPressed: () {},
+            onPressed: () {
+              BlocProvider.of<MinesweeperBloc>(context).add(const ResetGame());
+              setState(() {});
+            },
             color: Colors.grey,
             clickDuration: const Duration(milliseconds: 100),
             child: Text(
