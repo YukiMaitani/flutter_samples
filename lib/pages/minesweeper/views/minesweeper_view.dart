@@ -2,11 +2,13 @@ import 'dart:ui' as ui;
 
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flat_3d_button/flat_3d_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_samples/pages/minesweeper/bloc/minesweeper_bloc.dart';
 import 'package:flutter_samples/pages/minesweeper/bloc/minesweeper_state.dart';
 import 'package:flutter_samples/pages/minesweeper/util/foundation.dart';
+import 'package:gap/gap.dart';
 
 import '../../../gen/assets.gen.dart';
 import '../bloc/minesweeper_event.dart';
@@ -62,6 +64,8 @@ class _MinesweeperViewState extends State<MinesweeperView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          _buildFaceButton(),
+          const Gap(8),
           if (_spriteSheet == null)
             const SizedBox()
           else
@@ -73,9 +77,32 @@ class _MinesweeperViewState extends State<MinesweeperView> {
                   child: _buildTiles(),
                 ),
               ],
-            )
+            ),
+          const Gap(40),
         ],
       ),
+    );
+  }
+
+  Widget _buildFaceButton() {
+    return BlocBuilder<MinesweeperBloc, MinesweeperState>(
+      builder: (BuildContext context, state) {
+        final gameState = state.gameState;
+        final faceText = switch (gameState) {
+          GameState.before => '🙂',
+          GameState.playing => '🙂',
+          GameState.won => '😎',
+          GameState.lost => '😵',
+        };
+        return Flat3dButton(
+            onPressed: () {},
+            color: Colors.grey,
+            clickDuration: const Duration(milliseconds: 100),
+            child: Text(
+              faceText,
+              style: const TextStyle(fontSize: 32),
+            ));
+      },
     );
   }
 
