@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_samples/pages/minesweeper/model/tile.dart';
 
 class TileImage extends StatelessWidget {
-  TileImage(this.tile, this.spriteSheet, {super.key});
+  const TileImage(this.tile, this.spriteSheet, {super.key});
 
   final Tile tile;
   final SpriteSheet spriteSheet;
