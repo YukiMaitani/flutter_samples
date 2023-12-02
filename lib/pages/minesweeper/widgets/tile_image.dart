@@ -59,8 +59,15 @@ class TileImage extends StatelessWidget {
   }
 
   Widget _buildFlaggedTile() {
-    return Stack(children: [_buildUnRevealedTile(), _buildFragTile()]);
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        _buildUnRevealedTile(),
+        _buildFragTile(),
+      ],
+    );
   }
+
 
   Widget _buildFragTile() {
     return _buildTile(0, 2);

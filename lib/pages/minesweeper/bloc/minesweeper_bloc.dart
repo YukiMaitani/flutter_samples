@@ -24,13 +24,16 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     if (selectTile.isRevealed) {
       return;
     } else {
-      _openTile(emit, selectTile: selectTile, tiles: tiles);
+      if(!state.isFlagMode || state.gameState == GameState.before){
+        _openTile(emit, selectTile: selectTile, tiles: tiles);
+      } else if(!selectTile.isRevealed){
+        _flagTile(emit, selectTile: selectTile, tiles: tiles);
+      }
     }
   }
 
   void _onToggleFlagModeEvent(ToggleFlagMode event, Emitter<MinesweeperState> emit) {
-    final isFlagMode = state.isFlagMode;
-    emit(state.copyWith(isFlagMode: !isFlagMode));
+    emit(state.copyWith(isFlagMode: !state.isFlagMode));
   }
 
   void _openTile(Emitter<MinesweeperState> emit,
@@ -56,6 +59,12 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
       final checkTile = zeroTiles.removeLast();
       _openTile(emit, selectTile: checkTile, tiles: tiles, preZeroTiles: zeroTiles);
     }
+  }
+
+  void _flagTile(Emitter<MinesweeperState> emit,
+      {required Tile selectTile,required List<List<Tile>> tiles}) {
+    tiles.setTileWithT(selectTile.copyWith(isFlagged: !selectTile.isFlagged));
+    emit(state.copyWith(tiles: tiles));
   }
 
   void _initGame(int selectIndex, Emitter<MinesweeperState> emit) {
