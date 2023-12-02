@@ -3,6 +3,8 @@ import 'package:flame/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_samples/pages/minesweeper/model/tile.dart';
 
+import 'package:flutter/material.dart';
+
 class TileImage extends StatelessWidget {
   const TileImage(this.tile, this.spriteSheet, {super.key});
 
@@ -38,6 +40,9 @@ class TileImage extends StatelessWidget {
       }
       if (tile.adjacentMinesNum == 8) {
         return _buildRevealed8Tile();
+      }
+      if(tile.isExploded) {
+        return Container(color: Colors.red,child: _buildExplodedTile());
       }
       if (tile.isMine) {
         return _buildRevealedMineTile();
@@ -111,5 +116,9 @@ class TileImage extends StatelessWidget {
 
   Widget _buildRevealedMineTile() {
     return _buildTile(0, 0);
+  }
+
+  Widget _buildExplodedTile() {
+    return _buildTile(0, 3);
   }
 }

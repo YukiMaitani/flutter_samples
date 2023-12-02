@@ -26,8 +26,10 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
       _initGame(selectIndex, tiles);
     }
     final selectTile = tiles.getTileWithI(selectIndex);
-    if (selectTile.isRevealed) {
-      _onChording(selectTile, tiles);
+    if (selectTile.isMine && !selectTile.isFlagged && !state.isFlagMode) {
+      _explode(selectTile, tiles);
+    } else if (selectTile.isRevealed) {
+      _chording(selectTile, tiles);
     } else {
       if(!state.isFlagMode || state.gameState == GameState.before){
         _openTile(selectTile, tiles);
@@ -69,7 +71,7 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     }
   }
 
-  void _onChording(Tile selectTile, List<List<Tile>> tiles) {
+  void _chording(Tile selectTile, List<List<Tile>> tiles) {
     final adjacentTiles =
         tiles.getAdjacentTilesWithC(selectTile.x, selectTile.y);
     final adjacentFlags = adjacentTiles.where((e) => e.isFlagged);
@@ -79,6 +81,13 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
           _openTile(adjacentTile, tiles);
         }
       }
+    }
+  }
+
+  void _explode(Tile selectTile, List<List<Tile>> tiles) {
+    tiles.setTileWithT(selectTile.copyWith(isExploded: true));
+    for (final tile in tiles.expand((e) => e).where((e) => e.isMine && !e.isFlagged)) {
+      tiles.setTileWithT(tile.copyWith(isRevealed: true));
     }
   }
 
