@@ -24,14 +24,35 @@ class MinesweeperBloc extends Bloc<MinesweeperEvent, MinesweeperState> {
     if (selectTile.isRevealed) {
       return;
     } else {
-      _openTile(selectIndex, emit);
+      _openTile(emit, selectTile: selectTile, tiles: tiles);
     }
   }
 
-  void _openTile(int selectIndex, Emitter<MinesweeperState> emit) {
-    final tiles = state.tiles;
-    tiles.setTileWithI(selectIndex, isRevealed: true);
-    emit(state.copyWith(tiles: tiles));
+  void _openTile(Emitter<MinesweeperState> emit,
+      {required Tile selectTile,
+      List<Tile> preZeroTiles = const [],
+      required List<List<Tile>> tiles}) {
+    final adjacentTiles =
+        tiles.getAdjacentTilesWithC(selectTile.x, selectTile.y);
+    final adjacentZeroTiles =
+        adjacentTiles.where((e) => e.adjacentMinesNum == 0);
+    tiles.setTileWithT(selectTile.copyWith(isRevealed: true));
+    if (selectTile.adjacentMinesNum == 0) {
+      for (final adjacentTile in adjacentTiles) {
+        tiles.setTileWithT(adjacentTile.copyWith(isRevealed: true));
+      }
+    }
+    final zeroTiles = [...preZeroTiles, ...adjacentZeroTiles].where((tile) {
+      final adjacentTiles = tiles.getAdjacentTilesWithC(tile.x, tile.y);
+      return adjacentTiles.any((e) => !e.isRevealed);
+    }).toList();
+    if (zeroTiles.isEmpty) {
+      emit(state.copyWith(tiles: tiles));
+    } else {
+      final checkTile = zeroTiles.removeLast();
+      _openTile(emit,
+          selectTile: checkTile, tiles: tiles, preZeroTiles: zeroTiles);
+    }
   }
 
   void _initGame(int selectIndex, Emitter<MinesweeperState> emit) {
@@ -84,24 +105,28 @@ extension TileMatrixExtension on List<List<Tile>> {
           isRevealed: isRevealed,
           adjacentBombs: adjacentBombs);
 
-  void setTileWithT(Tile tile, int index) {
-    final coordinate = getCoordinate(index);
-    this[coordinate.y][coordinate.x] = tile;
+  void setTileWithT(Tile tile) {
+    this[tile.y][tile.x] = tile;
   }
 
-  List<Tile> getAdjacentTiles(int x, int y) {
+  List<Tile> getAdjacentTilesWithC(int x, int y) {
     final result = <Tile>[];
     for (int i = -1; i <= 1; i++) {
       for (int j = -1; j <= 1; j++) {
         final newX = x + i;
         final newY = y + j;
-        if (isOutOfBound(newX, newY)) {
+        if (isOutOfBound(newX, newY) || (i == 0 && j == 0)) {
           continue;
         }
         result.add(this[newY][newX]);
       }
     }
     return result;
+  }
+
+  List<Tile> getAdjacentTilesWithI(int index) {
+    final coordinate = getCoordinate(index);
+    return getAdjacentTilesWithC(coordinate.x, coordinate.y);
   }
 
   List<int> getAdjacentIndexes(int index) {
@@ -121,7 +146,7 @@ extension TileMatrixExtension on List<List<Tile>> {
   }
 
   int getAdjacentMinesNum(int x, int y) {
-    return getAdjacentTiles(x, y).where((tile) => tile.isMine).length;
+    return getAdjacentTilesWithC(x, y).where((tile) => tile.isMine).length;
   }
 
   void setAdjacentMinesNum(Tile tile) {
