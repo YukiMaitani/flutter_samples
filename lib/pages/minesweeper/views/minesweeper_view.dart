@@ -58,7 +58,6 @@ class _MinesweeperViewState extends State<MinesweeperView> {
   }
 
   Widget _buildBody() {
-    final minesweeperBloc = BlocProvider.of<MinesweeperBloc>(context);
     return BlocListener<MinesweeperBloc, MinesweeperState>(
       listener: (BuildContext context, state) {},
       child: Column(
@@ -146,7 +145,7 @@ class _MinesweeperViewState extends State<MinesweeperView> {
       aspectRatio: 1,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF181818),
+          color: Colors.brown.shade900,
           border: Border.all(color: const Color(0xFFAC6B26), width: 8),
           borderRadius: BorderRadius.circular(1),
         ),
