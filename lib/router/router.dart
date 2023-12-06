@@ -4,6 +4,7 @@ import 'package:flutter_samples/pages/earth/earth_page.dart';
 import 'package:flutter_samples/pages/freeman_chain/freeman_chain_page.dart';
 import 'package:flutter_samples/pages/home/home_page.dart';
 import 'package:flutter_samples/pages/minesweeper/views/minesweeper_page.dart';
+import 'package:flutter_samples/pages/minesweeper_riverpod_gen/minesweeper_riverpod_gen_page.dart';
 import 'package:flutter_samples/router/router_paths.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,5 +40,8 @@ final router = GoRouter(
       pageBuilder: (context, state) =>
           const MaterialPage(child: MinesweeperPage()),
     ),
+    GoRoute(path: minesweeperRiverpodGenPath, pageBuilder: (context, state) {
+      return const MaterialPage(child: MinesweeperRiverpodGenPage());
+    }),
   ],
 );

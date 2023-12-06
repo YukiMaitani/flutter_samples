@@ -1,6 +1,5 @@
 import 'package:flame/sprite.dart';
 import 'package:flame/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_samples/pages/minesweeper/model/tile.dart';
 
 import 'package:flutter/material.dart';
