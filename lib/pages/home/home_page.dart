@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
         _buildListTile(title: 'Freeman Chain', path: freemanChainPath),
         _buildListTile(title: 'Minesweeper', path: minesweeperPath),
         _buildListTile(title: 'Minesweeper Riverpod Gen', path: minesweeperRiverpodGenPath),
+        _buildListTile(title: 'Flame Camera', path: flameCameraPath),
       ],
     );
   }

@@ -8,6 +8,7 @@ import 'package:flutter_samples/pages/minesweeper_riverpod_gen/minesweeper_river
 import 'package:flutter_samples/router/router_paths.dart';
 import 'package:go_router/go_router.dart';
 
+import '../pages/flame_camera/flame_camera_page.dart';
 import '../pages/life_or_death/views/game_page.dart';
 
 final router = GoRouter(
@@ -42,6 +43,9 @@ final router = GoRouter(
     ),
     GoRoute(path: minesweeperRiverpodGenPath, pageBuilder: (context, state) {
       return const MaterialPage(child: MinesweeperRiverpodGenPage());
+    }),
+    GoRoute(path: flameCameraPath, pageBuilder: (context, state) {
+      return const MaterialPage(child: FlameCameraPage());
     }),
   ],
 );
