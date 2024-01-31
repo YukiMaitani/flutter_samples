@@ -23,6 +23,18 @@ class LevelManager extends Component with HasGameRef<DoodleDash>{
     return levelsConfig[level]!.jumpSpeed;
   }
 
+  double get minDistance {
+    return levelsConfig[level]!.minDistance;
+  }
+
+  double get maxDistance {
+    return levelsConfig[level]!.maxDistance;
+  }
+
+  Difficulty get difficulty {
+    return levelsConfig[level]!;
+  }
+
   void reset() {
     level = selectedLevel;
   }

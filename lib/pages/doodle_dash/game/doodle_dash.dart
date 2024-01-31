@@ -5,6 +5,7 @@ import 'package:flutter_samples/pages/doodle_dash/game/world.dart';
 
 import 'managers/game_manager.dart';
 import 'managers/level_manager.dart';
+import 'managers/object_manager.dart';
 
 enum Character { dash, sparky }
 
@@ -13,8 +14,9 @@ class DoodleDash extends FlameGame with HasKeyboardHandlerComponents, HasCollisi
   late Player player;
   final _world = World();
   final levelManager = LevelManager();
-
+  ObjectManager objectManager = ObjectManager();
   GameManager gameManager = GameManager();
+  int screenBufferSpace = 300;
 
   @override
   Future<void> onLoad() async {
@@ -36,9 +38,20 @@ class DoodleDash extends FlameGame with HasKeyboardHandlerComponents, HasCollisi
   }
 
   void initializeGameStart() {
-    setCharacter();
+    gameManager.reset();
+    if (children.contains(objectManager)) objectManager.removeFromParent();
+
     levelManager.reset();
+
     player.reset();
+
+    objectManager = ObjectManager(
+        minVerticalDistanceToNextPlatform: levelManager.minDistance,
+        maxVerticalDistanceToNextPlatform: levelManager.maxDistance);
+
+    add(objectManager);
+
+    objectManager.configure(levelManager.level, levelManager.difficulty);
   }
 
   void startGame() {
