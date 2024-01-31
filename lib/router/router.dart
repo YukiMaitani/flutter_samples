@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/pages/collision_detection/views/collision_detection_page.dart';
+import 'package:flutter_samples/pages/doodle_dash/doodle_dash_page.dart';
 import 'package:flutter_samples/pages/earth/earth_page.dart';
 import 'package:flutter_samples/pages/freeman_chain/freeman_chain_page.dart';
 import 'package:flutter_samples/pages/home/home_page.dart';
@@ -46,6 +47,9 @@ final router = GoRouter(
     }),
     GoRoute(path: flameCameraPath, pageBuilder: (context, state) {
       return const MaterialPage(child: FlameCameraPage());
+    }),
+    GoRoute(path: doodleDashPath, pageBuilder: (context, state) {
+      return const MaterialPage(child: DoodleDashPage());
     }),
   ],
 );

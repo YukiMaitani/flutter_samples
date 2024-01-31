@@ -6,3 +6,4 @@ const String freemanChainPath = '/freeman-chain';
 const String minesweeperPath = '/minesweeper';
 const String minesweeperRiverpodGenPath = '/minesweeper-riverpod-gen';
 const String flameCameraPath = '/flame-camera';
+const String doodleDashPath = '/doodle-dash';
