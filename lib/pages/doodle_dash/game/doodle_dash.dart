@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_samples/pages/doodle_dash/game/sprites/player.dart';
@@ -27,6 +30,29 @@ class DoodleDash extends FlameGame with HasKeyboardHandlerComponents, HasCollisi
   @override
   void update(double dt) {
     super.update(dt);
+    if (gameManager.isIntro) {
+      overlays.add('mainMenuOverlay');
+      return;
+    }
+
+    if (gameManager.isPlaying) {
+      final Rect worldBounds = Rect.fromLTRB(
+        0,
+        camera.position.y - screenBufferSpace,
+        camera.gameSize.x,
+        camera.position.y + _world.size.y,
+      );
+      camera.worldBounds = worldBounds;
+
+      if (player.isMovingDown) {
+        camera.worldBounds = worldBounds;
+      }
+
+      var isInTopHalfOfScreen = player.position.y <= (_world.size.y / 2);
+      if (!player.isMovingDown && isInTopHalfOfScreen) {
+        camera.followComponent(player);
+      }                                                               // ... to here.
+    }
   }
 
   void setCharacter() {
@@ -43,6 +69,15 @@ class DoodleDash extends FlameGame with HasKeyboardHandlerComponents, HasCollisi
 
     levelManager.reset();
 
+    player.reset();
+    camera.worldBounds = Rect.fromLTRB(
+      0,
+      -_world.size.y,
+      camera.gameSize.x,
+      _world.size.y +
+          screenBufferSpace,
+    );
+    camera.followComponent(player);
     player.reset();
 
     objectManager = ObjectManager(
