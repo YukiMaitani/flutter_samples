@@ -12,6 +12,8 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  $AssetsImagesDoodleDashGen get doodleDash =>
+      const $AssetsImagesDoodleDashGen();
   $AssetsImagesLifeOrDeathGen get lifeOrDeath =>
       const $AssetsImagesLifeOrDeathGen();
   $AssetsImagesMinesweeperGen get minesweeper =>
@@ -26,6 +28,13 @@ class $AssetsSoundsGen {
 
   /// List of all assets
   List<String> get values => [explosion];
+}
+
+class $AssetsImagesDoodleDashGen {
+  const $AssetsImagesDoodleDashGen();
+
+  $AssetsImagesDoodleDashBackgroundGen get background =>
+      const $AssetsImagesDoodleDashBackgroundGen();
 }
 
 class $AssetsImagesLifeOrDeathGen {
@@ -52,6 +61,38 @@ class $AssetsImagesMinesweeperGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [flag, tile];
+}
+
+class $AssetsImagesDoodleDashBackgroundGen {
+  const $AssetsImagesDoodleDashBackgroundGen();
+
+  /// File path: assets/images/doodle_dash/background/big_stars.png
+  AssetGenImage get bigStars =>
+      const AssetGenImage('assets/images/doodle_dash/background/big_stars.png');
+
+  /// File path: assets/images/doodle_dash/background/block_shapes.png
+  AssetGenImage get blockShapes => const AssetGenImage(
+      'assets/images/doodle_dash/background/block_shapes.png');
+
+  /// File path: assets/images/doodle_dash/background/orbs.png
+  AssetGenImage get orbs =>
+      const AssetGenImage('assets/images/doodle_dash/background/orbs.png');
+
+  /// File path: assets/images/doodle_dash/background/small_stars.png
+  AssetGenImage get smallStars => const AssetGenImage(
+      'assets/images/doodle_dash/background/small_stars.png');
+
+  /// File path: assets/images/doodle_dash/background/solid.png
+  AssetGenImage get solid =>
+      const AssetGenImage('assets/images/doodle_dash/background/solid.png');
+
+  /// File path: assets/images/doodle_dash/background/squiggles.png
+  AssetGenImage get squiggles =>
+      const AssetGenImage('assets/images/doodle_dash/background/squiggles.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [bigStars, blockShapes, orbs, smallStars, solid, squiggles];
 }
 
 class Assets {

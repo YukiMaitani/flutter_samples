@@ -39,4 +39,6 @@ flutter:
     - assets/images/life_or_death/
     - assets/images/minesweeper/
     - assets/sounds/
+    - assets/images/doodle_dash/
+    - assets/images/doodle_dash/background/
   uses-material-design: true

@@ -1,4 +1,6 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/pages/doodle_dash/game/doodle_dash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DoodleDashPage extends HookConsumerWidget {
@@ -11,7 +13,7 @@ class DoodleDashPage extends HookConsumerWidget {
         title: const Text('Doodle Dash'),
         shadowColor: Colors.transparent,
       ),
-      body: const Column(),
+      body: GameWidget(game: DoodleDash()),
     );
   }
 }
