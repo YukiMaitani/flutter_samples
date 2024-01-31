@@ -28,6 +28,7 @@ class Player extends SpriteGroupComponent<PlayerState>
 
   final int movingLeftInput = -1;
   final int movingRightInput = 1;
+  final double _gravity = 9;
 
   Vector2 _velocity = Vector2.zero();
   int _hAxisInput = 0;
@@ -78,7 +79,7 @@ class Player extends SpriteGroupComponent<PlayerState>
     }
 
     if (keysPressed.contains(LogicalKeyboardKey.arrowUp)) {
-      // jump();
+      jump();
     }
 
     return true;
@@ -99,6 +100,8 @@ class Player extends SpriteGroupComponent<PlayerState>
       position.x = dashHorizontalCenter;
     }
 
+    _velocity.y += _gravity;
+
     position += _velocity * dt;
     super.update(dt);
   }
@@ -113,6 +116,10 @@ class Player extends SpriteGroupComponent<PlayerState>
     _hAxisInput = 0;
     current = PlayerState.right;
     _hAxisInput += movingRightInput;
+  }
+
+  void jump({double? specialJumpSpeed}) {
+    _velocity.y = specialJumpSpeed != null ? -specialJumpSpeed : -jumpSpeed;
   }
 
   void reset() {
