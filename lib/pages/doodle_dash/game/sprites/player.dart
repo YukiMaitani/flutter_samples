@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_samples/pages/doodle_dash/game/sprites/platform.dart';
 
 import '../doodle_dash.dart';
 
@@ -33,10 +34,13 @@ class Player extends SpriteGroupComponent<PlayerState>
   Vector2 _velocity = Vector2.zero();
   int _hAxisInput = 0;
   double jumpSpeed;
+  bool get isMovingDown => _velocity.y > 0;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
+    await add(CircleHitbox());
 
     await _loadCharacterSprites();
     current = PlayerState.center;
@@ -104,6 +108,21 @@ class Player extends SpriteGroupComponent<PlayerState>
 
     position += _velocity * dt;
     super.update(dt);
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+    bool isCollidingVertically =
+        (intersectionPoints.first.y - intersectionPoints.last.y).abs() < 5;
+
+    if (isMovingDown && isCollidingVertically) {
+      current = PlayerState.center;
+      if (other is NormalPlatform) {
+        jump();
+        return;
+      }
+    }
   }
 
   void moveLeft() {
